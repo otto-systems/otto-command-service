@@ -1,6 +1,6 @@
 {
   "repo": "otto-command-service",
-  "syncedAt": "2026-07-03T15:18:09Z",
+  "syncedAt": "2026-07-03T16:00:14.258Z",
   "targetVersion": "0.2.1",
   "manifestConsistency": "validated",
   "schemaConsistency": "validated",
@@ -8,13 +8,13 @@
   "releasePrep": "completed",
   "commit": {
     "status": "committed",
-    "hash": "2887297625ded426a67658dfcf5bcfddae74d26f",
-    "message": "sync index reconciled to current HEAD"
+    "hash": "dab500533827df950009adc5f1a635f7067cf10f",
+    "message": "release 0.2.1 metadata aligned to current HEAD"
   },
   "push": {
     "status": "pushed"
   },
-  "updatedAt": "2026-07-03T15:54:38.261Z",
+  "updatedAt": "2026-07-03T16:00:14.258Z",
   "releaseVersion": "0.2.1",
   "releaseMetadata": {
     "channel": "stable",
