@@ -35,7 +35,7 @@ const emitted = `/* eslint-disable */\n` +
 `  if (!schema) {\n` +
 `    throw new Error(\`Unknown generated command: \${commandName}\`);\n` +
 `  }\n` +
-`  const handlerUrl = new URL(\`../../otto-command-service/src/handlers/\${schema.routing.handlerModule}\`, import.meta.url);\n` +
+`  const handlerUrl = new URL(\`../../../otto-command-service/src/handlers/\${schema.routing.handlerModule}\`, import.meta.url);\n` +
 `  const mod = await import(handlerUrl.href);\n` +
 `  const fn = mod[schema.routing.handlerExport];\n` +
 `  if (typeof fn !== \"function\") {\n` +
