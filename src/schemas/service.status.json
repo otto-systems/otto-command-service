@@ -1,0 +1,16 @@
+{
+  "name": "service.status",
+  "description": "Query OttoUpdate service status.",
+  "parameters": { "type": "object", "required": [], "additionalProperties": false, "properties": {} },
+  "returnType": { "type": "object", "required": ["ok", "message"], "additionalProperties": false, "properties": { "ok": { "type": "boolean" }, "message": { "type": "string" } } },
+  "errorTypes": ["UnsupportedPlatformError", "ServiceCommandError"],
+  "permissions": ["service:read"],
+  "routing": {
+    "handlerModule": "serviceStatus.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "GET", "path": "/v1/commands/service/status" },
+    "cli": { "group": "service", "command": "status" },
+    "operationId": "serviceStatus"
+  }
+}

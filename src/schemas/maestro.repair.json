@@ -1,0 +1,27 @@
+{
+  "name": "maestro.repair",
+  "description": "Repair Maestro runtime by replaying install lifecycle validation.",
+  "parameters": {
+    "type": "object",
+    "required": [],
+    "additionalProperties": true,
+    "properties": {
+      "verifyOnly": { "type": "boolean", "default": false },
+      "dryRun": { "type": "boolean", "default": false }
+    }
+  },
+  "returnType": {
+    "type": "object",
+    "additionalProperties": true
+  },
+  "errorTypes": ["MaestroRepairError"],
+  "permissions": ["maestro:repair"],
+  "routing": {
+    "handlerModule": "maestroRepair.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "POST", "path": "/v1/commands/maestro/repair" },
+    "cli": { "group": "maestro", "command": "repair" },
+    "operationId": "maestroRepair"
+  }
+}

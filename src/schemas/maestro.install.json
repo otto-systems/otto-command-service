@@ -1,0 +1,28 @@
+{
+  "name": "maestro.install",
+  "description": "Install Maestro runtime via Otto lifecycle hooks.",
+  "parameters": {
+    "type": "object",
+    "required": [],
+    "additionalProperties": true,
+    "properties": {
+      "payloadPath": { "type": "string" },
+      "channel": { "type": "string", "default": "stable" },
+      "dryRun": { "type": "boolean", "default": false }
+    }
+  },
+  "returnType": {
+    "type": "object",
+    "additionalProperties": true
+  },
+  "errorTypes": ["MaestroInstallError"],
+  "permissions": ["maestro:install"],
+  "routing": {
+    "handlerModule": "maestroInstall.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "POST", "path": "/v1/commands/maestro/install" },
+    "cli": { "group": "maestro", "command": "install" },
+    "operationId": "maestroInstall"
+  }
+}

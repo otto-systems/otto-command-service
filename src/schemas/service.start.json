@@ -1,0 +1,16 @@
+{
+  "name": "service.start",
+  "description": "Start OttoUpdate service.",
+  "parameters": { "type": "object", "required": [], "additionalProperties": false, "properties": {} },
+  "returnType": { "type": "object", "required": ["ok", "message"], "additionalProperties": false, "properties": { "ok": { "type": "boolean" }, "message": { "type": "string" } } },
+  "errorTypes": ["UnsupportedPlatformError", "ServiceCommandError"],
+  "permissions": ["service:manage"],
+  "routing": {
+    "handlerModule": "serviceStart.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "POST", "path": "/v1/commands/service/start" },
+    "cli": { "group": "service", "command": "start" },
+    "operationId": "serviceStart"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "name": "maestro.update",
+  "description": "Update Maestro runtime via Otto lifecycle hooks.",
+  "parameters": {
+    "type": "object",
+    "required": [],
+    "additionalProperties": true,
+    "properties": {
+      "channel": { "type": "string", "default": "stable" },
+      "dryRun": { "type": "boolean", "default": false }
+    }
+  },
+  "returnType": {
+    "type": "object",
+    "additionalProperties": true
+  },
+  "errorTypes": ["MaestroUpdateError"],
+  "permissions": ["maestro:update"],
+  "routing": {
+    "handlerModule": "maestroUpdate.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "POST", "path": "/v1/commands/maestro/update" },
+    "cli": { "group": "maestro", "command": "update" },
+    "operationId": "maestroUpdate"
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "name": "config.show",
+  "description": "Display OttoUpdate server configuration.",
+  "parameters": {
+    "type": "object",
+    "required": [],
+    "additionalProperties": false,
+    "properties": {
+      "path": { "type": "string", "default": "./config/server.toml" }
+    }
+  },
+  "returnType": {
+    "type": "object",
+    "required": ["bind", "bearer_token"],
+    "additionalProperties": false,
+    "properties": {
+      "bind": { "type": "string" },
+      "bearer_token": { "type": ["string", "null"] }
+    }
+  },
+  "errorTypes": ["ConfigReadError", "ConfigParseError"],
+  "permissions": ["config:read"],
+  "routing": {
+    "handlerModule": "configShow.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "GET", "path": "/v1/commands/config/show" },
+    "cli": { "group": "config", "command": "show" },
+    "operationId": "configShow"
+  }
+}

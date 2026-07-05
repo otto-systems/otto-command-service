@@ -1,0 +1,27 @@
+{
+  "name": "maestro.uninstall",
+  "description": "Uninstall Maestro runtime by invoking pre-uninstall lifecycle hook.",
+  "parameters": {
+    "type": "object",
+    "required": [],
+    "additionalProperties": true,
+    "properties": {
+      "purgeData": { "type": "boolean", "default": false },
+      "dryRun": { "type": "boolean", "default": false }
+    }
+  },
+  "returnType": {
+    "type": "object",
+    "additionalProperties": true
+  },
+  "errorTypes": ["MaestroUninstallError"],
+  "permissions": ["maestro:uninstall"],
+  "routing": {
+    "handlerModule": "maestroUninstall.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "DELETE", "path": "/v1/commands/maestro/uninstall" },
+    "cli": { "group": "maestro", "command": "uninstall" },
+    "operationId": "maestroUninstall"
+  }
+}
