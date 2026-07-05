@@ -24,6 +24,8 @@ Generated outputs are written to:
 - `../otto-update/src/generated_api/index.ts`
 - `../otto-update/src/generated_cli/index.ts`
 
+The generated API surface resolves handler modules from this standalone repo, so `otto-update` remains a consumer of generated artifacts rather than a source of command definitions.
+
 ## How Other Repos Should Import
 - Node repos can load schemas directly:
 	- `import { loadCommandSchemas } from "@otto/command-service";`
@@ -31,3 +33,11 @@ Generated outputs are written to:
 	- `src/generated_cli/index.ts`
 	- `src/generated_api/index.ts`
 - No repository should define standalone command schemas outside this repo.
+
+## Verified Consumers
+- `otto-update` uses the generated CLI/API surfaces and the sibling file dependency.
+- `otto-kernel` loads command schemas from `@otto/command-service`.
+- `otto-extensions` loads command schemas from `@otto/command-service`.
+- `Maestro` validates required Maestro command contracts from `@otto/command-service`.
+
+Current migration evidence is recorded in `../otto-update/docs/` because the Otto workspace root is not itself a git repository.
