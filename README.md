@@ -1,17 +1,33 @@
 # Otto Command Service
 
-The Otto Command Service defines the command contract for Otto.  
-It provides the registry, validation rules, routing logic, and permission model that all commands—core and extension—must follow.
+`otto-command-service` is the standalone source of truth for Otto command contracts.
 
-## Responsibilities
-- Define the command manifest schema
-- Validate command manifests at registration time
-- Route commands to kernel, update engine, or extensions
-- Enforce command permissions and safety policies
-- Provide a stable API surface for clients and modules
+All command schemas, handler bindings, and surface generators live here and are consumed by the rest of the Otto repositories.
 
-## Planned Structure
-- `src/core/` – core command registry, routing, and validation
-- `src/cli/` – CLI interface for command execution
-- `docs/` – command schemas, routing rules, and OpenAPI specs
-- `prompts/` – Copilot prompt packs (added later)
+## Repository Structure
+- `src/schemas/` – canonical command schemas
+- `src/handlers/` – handler modules referenced by schema routing metadata
+- `src/generators/cli-generator/` – CLI surface generator
+- `src/generators/api-generator/` – API surface generator
+- `src/index.ts` – schema loading and command execution helpers
+- `tests/` – command-service validation tests
+
+## Generation Workflow
+- Generate API surface for `otto-update`:
+	- `npm run generate:api`
+- Generate CLI surface for `otto-update`:
+	- `npm run generate:cli`
+- Generate both:
+	- `npm run generate:surfaces`
+
+Generated outputs are written to:
+- `../otto-update/src/generated_api/index.ts`
+- `../otto-update/src/generated_cli/index.ts`
+
+## How Other Repos Should Import
+- Node repos can load schemas directly:
+	- `import { loadCommandSchemas } from "@otto/command-service";`
+- `otto-update` consumes generated surfaces only:
+	- `src/generated_cli/index.ts`
+	- `src/generated_api/index.ts`
+- No repository should define standalone command schemas outside this repo.
