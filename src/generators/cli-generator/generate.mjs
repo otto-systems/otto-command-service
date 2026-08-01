@@ -1,7 +1,9 @@
 import fs from "node:fs/promises";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 
-const repoRoot = path.resolve(path.dirname(new URL(import.meta.url).pathname), "../../..");
+const moduleDir = path.dirname(fileURLToPath(import.meta.url));
+const repoRoot = path.resolve(moduleDir, "../../..");
 const commandsDir = path.join(repoRoot, "src/schemas");
 const outFile = path.join(repoRoot, "../otto-update/src/generated_cli/index.ts");
 

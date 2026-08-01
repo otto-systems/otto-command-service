@@ -1,6 +1,6 @@
 {
   "repo": "otto-command-service",
-  "syncedAt": "2026-07-03T16:00:14.258Z",
+  "syncedAt": "2026-08-01T00:00:00.000Z",
   "targetVersion": "0.2.1",
   "manifestConsistency": "validated",
   "schemaConsistency": "validated",
@@ -14,7 +14,7 @@
   "push": {
     "status": "pushed"
   },
-  "updatedAt": "2026-07-03T16:00:14.258Z",
+  "updatedAt": "2026-08-01T00:00:00.000Z",
   "releaseVersion": "0.2.1",
   "releaseMetadata": {
     "channel": "stable",
@@ -24,7 +24,7 @@
   "validation": {
     "typescriptNoEmit": "pass"
   },
-  "syncStage": "post_release_stabilization",
+  "syncStage": "cross_platform_installer_go_sync",
   "releaseTag": "v0.2.1",
   "tags": {
     "status": "pushed",
@@ -34,5 +34,9 @@
     "status": "published",
     "tag": "v0.2.1",
     "url": "https://github.com/otto-systems/otto-command-service/releases/tag/v0.2.1"
+  },
+  "latestSync": {
+    "summary": "generator surfaces aligned for otto-update installer pipeline",
+    "date": "2026-08-01T00:00:00.000Z"
   }
 }
