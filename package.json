@@ -1,28 +1,28 @@
 {
-  "name": "@otto/command-service",
-  "version": "0.2.1",
-  "private": true,
-  "type": "module",
-  "main": "./src/index.ts",
-  "types": "./src/index.ts",
-  "files": [
-    "src",
-    "dist"
-  ],
-  "scripts": {
-    "generate:api": "node ./src/generators/api-generator/generate.mjs",
-    "generate:cli": "node ./src/generators/cli-generator/generate.mjs",
-    "generate:surfaces": "npm run generate:api && npm run generate:cli",
-    "build": "tsc -p tsconfig.json",
-    "typecheck": "tsc -p tsconfig.json --noEmit",
-    "test": "vitest run"
-  },
-  "dependencies": {
-    "@otto/protocol": "file:../otto-protocol"
-  },
-  "devDependencies": {
-    "@types/node": "^20.16.5",
-    "typescript": "^5.5.4",
-    "vitest": "^2.0.5"
-  }
+    "name":  "@otto/command-service",
+    "version":  "0.2.2",
+    "private":  true,
+    "type":  "module",
+    "main":  "./src/index.ts",
+    "types":  "./src/index.ts",
+    "files":  [
+                  "src",
+                  "dist"
+              ],
+    "scripts":  {
+                    "generate:api":  "node ./src/generators/api-generator/generate.mjs",
+                    "generate:cli":  "node ./src/generators/cli-generator/generate.mjs",
+                    "generate:surfaces":  "npm run generate:api \u0026\u0026 npm run generate:cli",
+                    "build":  "tsc -p tsconfig.json",
+                    "typecheck":  "tsc -p tsconfig.json --noEmit",
+                    "test":  "vitest run"
+                },
+    "dependencies":  {
+                         "@otto/protocol":  "file:../otto-protocol"
+                     },
+    "devDependencies":  {
+                            "@types/node":  "^20.16.5",
+                            "typescript":  "^5.5.4",
+                            "vitest":  "^2.0.5"
+                        }
 }

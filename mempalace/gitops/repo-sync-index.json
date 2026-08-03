@@ -1,42 +1,42 @@
 {
-  "repo": "otto-command-service",
-  "syncedAt": "2026-08-01T00:00:00.000Z",
-  "targetVersion": "0.2.1",
-  "manifestConsistency": "validated",
-  "schemaConsistency": "validated",
-  "versionStatus": "aligned",
-  "releasePrep": "completed",
-  "commit": {
-    "status": "committed",
-    "hash": "dab500533827df950009adc5f1a635f7067cf10f",
-    "message": "release 0.2.1 metadata aligned to current HEAD"
-  },
-  "push": {
-    "status": "pushed"
-  },
-  "updatedAt": "2026-08-01T00:00:00.000Z",
-  "releaseVersion": "0.2.1",
-  "releaseMetadata": {
-    "channel": "stable",
-    "updateManifest": "manifests/release-0.2.1.json",
-    "latestManifest": "manifests/latest.json"
-  },
-  "validation": {
-    "typescriptNoEmit": "pass"
-  },
-  "syncStage": "cross_platform_installer_go_sync",
-  "releaseTag": "v0.2.1",
-  "tags": {
-    "status": "pushed",
-    "name": "v0.2.1"
-  },
-  "release": {
-    "status": "published",
-    "tag": "v0.2.1",
-    "url": "https://github.com/otto-systems/otto-command-service/releases/tag/v0.2.1"
-  },
-  "latestSync": {
-    "summary": "generator surfaces aligned for otto-update installer pipeline",
-    "date": "2026-08-01T00:00:00.000Z"
-  }
+    "repo":  "otto-command-service",
+    "syncedAt":  "2026-08-02T22:30:00.000Z",
+    "targetVersion":  "0.2.2",
+    "manifestConsistency":  "validated",
+    "schemaConsistency":  "validated",
+    "versionStatus":  "aligned_local_workspace",
+    "releasePrep":  "completed",
+    "commit":  {
+                   "status":  "committed",
+                   "hash":  "dab500533827df950009adc5f1a635f7067cf10f",
+                   "message":  "release 0.2.1 metadata aligned to current HEAD"
+               },
+    "push":  {
+                 "status":  "pushed"
+             },
+    "updatedAt":  "2026-08-02T22:30:00.000Z",
+    "releaseVersion":  "0.2.1",
+    "releaseMetadata":  {
+                            "channel":  "stable",
+                            "updateManifest":  "manifests/release-0.2.1.json",
+                            "latestManifest":  "manifests/latest.json"
+                        },
+    "validation":  {
+                       "typescriptNoEmit":  "pass"
+                   },
+    "syncStage":  "tracer_bullet_validation",
+    "releaseTag":  "v0.2.1",
+    "tags":  {
+                 "status":  "pushed",
+                 "name":  "v0.2.1"
+             },
+    "release":  {
+                    "status":  "published",
+                    "tag":  "v0.2.1",
+                    "url":  "https://github.com/otto-systems/otto-command-service/releases/tag/v0.2.1"
+                },
+    "latestSync":  {
+                       "summary":  "Patch bump plus tracer-bullet validation sync",
+                       "date":  "2026-08-02T22:30:00.000Z"
+                   }
 }
