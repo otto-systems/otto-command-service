@@ -1,0 +1,27 @@
+{
+  "name": "debug.snapshot.system",
+  "description": "Capture a runtime snapshot for debugging and support handoff.",
+  "parameters": {
+    "type": "object",
+    "required": [],
+    "additionalProperties": false,
+    "properties": {
+      "includeMemory": { "type": "boolean" },
+      "includeEnv": { "type": "boolean" }
+    }
+  },
+  "returnType": {
+    "type": "object",
+    "additionalProperties": true
+  },
+  "errorTypes": ["SnapshotError"],
+  "permissions": ["debug:read"],
+  "routing": {
+    "handlerModule": "debugSnapshotSystem.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "POST", "path": "/v1/commands/debug/snapshot-system" },
+    "cli": { "group": "debug", "command": "snapshot" },
+    "operationId": "debugSnapshotSystem"
+  }
+}

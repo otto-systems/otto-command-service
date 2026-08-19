@@ -1,0 +1,24 @@
+{
+  "name": "file.list.installs",
+  "description": "List tracked install footprint entries.",
+  "parameters": { "type": "object", "required": [], "additionalProperties": false, "properties": {} },
+  "returnType": {
+    "type": "object",
+    "required": ["registryPath", "installs"],
+    "additionalProperties": false,
+    "properties": {
+      "registryPath": { "type": "string" },
+      "installs": { "type": "array", "items": { "type": "object" } }
+    }
+  },
+  "errorTypes": ["RegistryReadError"],
+  "permissions": ["file:read"],
+  "routing": {
+    "handlerModule": "fileListInstalls.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "GET", "path": "/v1/commands/file/list-installs" },
+    "cli": { "group": "file", "command": "list-installs" },
+    "operationId": "fileListInstalls"
+  }
+}

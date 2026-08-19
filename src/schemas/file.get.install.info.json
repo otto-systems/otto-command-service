@@ -1,0 +1,24 @@
+{
+  "name": "file.get.install.info",
+  "description": "Get install footprint details for a specific install id.",
+  "parameters": {
+    "type": "object",
+    "required": ["id"],
+    "additionalProperties": false,
+    "properties": { "id": { "type": "string" } }
+  },
+  "returnType": {
+    "type": ["object", "null"],
+    "additionalProperties": true
+  },
+  "errorTypes": ["RegistryReadError"],
+  "permissions": ["file:read"],
+  "routing": {
+    "handlerModule": "fileGetInstallInfo.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "GET", "path": "/v1/commands/file/get-install-info" },
+    "cli": { "group": "file", "command": "get-install-info" },
+    "operationId": "fileGetInstallInfo"
+  }
+}

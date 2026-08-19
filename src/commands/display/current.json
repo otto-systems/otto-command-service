@@ -1,0 +1,4 @@
+﻿{
+  "id": "display.current",
+  "description": "Compute current role-specific display payload."
+}

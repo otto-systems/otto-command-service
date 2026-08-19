@@ -1,0 +1,16 @@
+{
+  "name": "calendar.refresh",
+  "description": "Refresh normalized calendar feed.",
+  "parameters": { "type": "object", "required": [], "additionalProperties": false, "properties": {} },
+  "returnType": { "type": "object", "additionalProperties": true },
+  "errorTypes": ["CalendarRefreshError"],
+  "permissions": ["calendar:read"],
+  "routing": {
+    "handlerModule": "calendarRefresh.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "GET", "path": "/v1/commands/calendar/refresh" },
+    "cli": { "group": "calendar", "command": "refresh" },
+    "operationId": "calendarRefresh"
+  }
+}

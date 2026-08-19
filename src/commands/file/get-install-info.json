@@ -1,0 +1,4 @@
+{
+  "id": "file.get.install.info",
+  "description": "Get install footprint details by install id."
+}

@@ -1,0 +1,4 @@
+{
+  "id": "file.check.space",
+  "description": "Check available disk space before install, update, and logging tasks."
+}

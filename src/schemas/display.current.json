@@ -1,0 +1,21 @@
+{
+  "name": "display.current",
+  "description": "Compute current display payload for a role.",
+  "parameters": {
+    "type": "object",
+    "required": ["role"],
+    "additionalProperties": false,
+    "properties": { "role": { "type": "string" } }
+  },
+  "returnType": { "type": "object", "additionalProperties": true },
+  "errorTypes": ["InvalidRoleError"],
+  "permissions": ["display:read"],
+  "routing": {
+    "handlerModule": "displayCurrent.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "GET", "path": "/v1/commands/display/current" },
+    "cli": { "group": "display", "command": "current" },
+    "operationId": "displayCurrent"
+  }
+}

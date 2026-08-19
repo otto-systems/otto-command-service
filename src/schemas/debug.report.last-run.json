@@ -1,0 +1,25 @@
+{
+  "name": "debug.report.last-run",
+  "description": "Return the last recorded debug run summary.",
+  "parameters": { "type": "object", "required": [], "additionalProperties": false, "properties": {} },
+  "returnType": {
+    "type": "object",
+    "required": ["generatedAt", "summary", "lastRun"],
+    "additionalProperties": true,
+    "properties": {
+      "generatedAt": { "type": "string" },
+      "summary": { "type": "string" },
+      "lastRun": { "type": ["object", "null"] }
+    }
+  },
+  "errorTypes": ["ReportReadError"],
+  "permissions": ["debug:read"],
+  "routing": {
+    "handlerModule": "debugReportLastRun.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "GET", "path": "/v1/commands/debug/report-last-run" },
+    "cli": { "group": "debug", "command": "last" },
+    "operationId": "debugReportLastRun"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "name": "file.rotate.logs",
+  "description": "Rotate and prune log files for debug and logging extensions.",
+  "parameters": {
+    "type": "object",
+    "required": ["directory", "maxFiles", "maxBytes"],
+    "additionalProperties": false,
+    "properties": {
+      "directory": { "type": "string" },
+      "maxFiles": { "type": "number" },
+      "maxBytes": { "type": "number" },
+      "activeLogFile": { "type": "string" }
+    }
+  },
+  "returnType": {
+    "type": "object",
+    "required": ["directory", "rotated", "removed"],
+    "additionalProperties": false,
+    "properties": {
+      "directory": { "type": "string" },
+      "rotated": { "type": "array", "items": { "type": "string" } },
+      "removed": { "type": "array", "items": { "type": "string" } }
+    }
+  },
+  "errorTypes": ["LogRotationError"],
+  "permissions": ["file:write"],
+  "routing": {
+    "handlerModule": "fileRotateLogs.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "POST", "path": "/v1/commands/file/rotate-logs" },
+    "cli": { "group": "file", "command": "rotate-logs" },
+    "operationId": "fileRotateLogs"
+  }
+}

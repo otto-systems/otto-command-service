@@ -1,0 +1,23 @@
+{
+  "name": "assignments.import",
+  "description": "Import assignments from FACTS CSV.",
+  "parameters": {
+    "type": "object",
+    "required": [],
+    "additionalProperties": false,
+    "properties": {
+      "file": { "type": "string" }
+    }
+  },
+  "returnType": { "type": "object", "additionalProperties": true },
+  "errorTypes": ["AssignmentsImportError"],
+  "permissions": ["assignments:read"],
+  "routing": {
+    "handlerModule": "assignmentsImport.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "GET", "path": "/v1/commands/assignments/import" },
+    "cli": { "group": "assignments", "command": "import" },
+    "operationId": "assignmentsImport"
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "name": "debug.trace.command",
+  "description": "Record command execution trace metadata for user-facing debugging.",
+  "parameters": {
+    "type": "object",
+    "required": ["command"],
+    "additionalProperties": true,
+    "properties": {
+      "command": { "type": "string" },
+      "status": { "type": "string" },
+      "details": { "type": "string" },
+      "verbose": { "type": "boolean" }
+    }
+  },
+  "returnType": {
+    "type": "object",
+    "required": ["ok", "summary"],
+    "additionalProperties": false,
+    "properties": {
+      "ok": { "type": "boolean" },
+      "summary": { "type": "string" }
+    }
+  },
+  "errorTypes": ["TraceWriteError"],
+  "permissions": ["debug:write"],
+  "routing": {
+    "handlerModule": "debugTraceCommand.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "POST", "path": "/v1/commands/debug/trace-command" },
+    "cli": { "group": "debug", "command": "trace-command" },
+    "operationId": "debugTraceCommand"
+  }
+}

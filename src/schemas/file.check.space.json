@@ -1,0 +1,34 @@
+{
+  "name": "file.check.space",
+  "description": "Check available disk space before install, update, or logging workflows.",
+  "parameters": {
+    "type": "object",
+    "required": ["targetPath", "minBytes"],
+    "additionalProperties": false,
+    "properties": {
+      "targetPath": { "type": "string" },
+      "minBytes": { "type": "number" }
+    }
+  },
+  "returnType": {
+    "type": "object",
+    "required": ["ok", "targetPath", "minBytes", "availableBytes"],
+    "additionalProperties": false,
+    "properties": {
+      "ok": { "type": "boolean" },
+      "targetPath": { "type": "string" },
+      "minBytes": { "type": "number" },
+      "availableBytes": { "type": "number" }
+    }
+  },
+  "errorTypes": ["StorageCheckError"],
+  "permissions": ["file:read"],
+  "routing": {
+    "handlerModule": "fileCheckSpace.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "POST", "path": "/v1/commands/file/check-space" },
+    "cli": { "group": "file", "command": "check-space" },
+    "operationId": "fileCheckSpace"
+  }
+}

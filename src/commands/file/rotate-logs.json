@@ -1,0 +1,4 @@
+{
+  "id": "file.rotate.logs",
+  "description": "Rotate and prune log files by size and retention limits."
+}

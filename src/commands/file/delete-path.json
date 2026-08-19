@@ -1,0 +1,4 @@
+{
+  "id": "file.delete.path",
+  "description": "Delete managed files or directories with safety guards."
+}
