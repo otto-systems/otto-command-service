@@ -1,0 +1,24 @@
+{
+  "name": "eds.get.extension",
+  "description": "Get a specific extension from the local EDS registry by name.",
+  "parameters": {
+    "type": "object",
+    "required": ["name"],
+    "additionalProperties": false,
+    "properties": {
+      "workspaceRoot": { "type": "string" },
+      "name": { "type": "string" }
+    }
+  },
+  "returnType": { "type": "object", "additionalProperties": true },
+  "errorTypes": ["EdsExtensionLookupError"],
+  "permissions": ["eds:read"],
+  "routing": {
+    "handlerModule": "edsGetExtension.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "GET", "path": "/eds/extension/:name" },
+    "cli": { "group": "eds", "command": "extension" },
+    "operationId": "edsGetExtension"
+  }
+}

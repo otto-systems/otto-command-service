@@ -1,0 +1,4 @@
+{
+  "id": "eds.get.extension",
+  "description": "Return a local extension definition by name from EDS."
+}

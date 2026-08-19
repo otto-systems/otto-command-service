@@ -1,0 +1,4 @@
+{
+  "id": "eds.get.extension.<name>",
+  "description": "Template command name for extension-specific EDS lookups."
+}

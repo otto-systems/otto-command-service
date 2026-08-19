@@ -1,0 +1,23 @@
+{
+  "name": "eds.scan",
+  "description": "Scan local workspace extension roots and rebuild runtime extension registry.",
+  "parameters": {
+    "type": "object",
+    "required": [],
+    "additionalProperties": false,
+    "properties": {
+      "workspaceRoot": { "type": "string" }
+    }
+  },
+  "returnType": { "type": "object", "additionalProperties": true },
+  "errorTypes": ["EdsScanError"],
+  "permissions": ["eds:read"],
+  "routing": {
+    "handlerModule": "edsScan.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "POST", "path": "/eds/scan" },
+    "cli": { "group": "eds", "command": "scan" },
+    "operationId": "edsScan"
+  }
+}

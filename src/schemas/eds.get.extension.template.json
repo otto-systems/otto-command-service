@@ -1,0 +1,24 @@
+{
+  "name": "eds.get.extension.<name>",
+  "description": "Template command contract for extension-specific lookup aliases.",
+  "parameters": {
+    "type": "object",
+    "required": [],
+    "additionalProperties": false,
+    "properties": {
+      "workspaceRoot": { "type": "string" },
+      "name": { "type": "string" }
+    }
+  },
+  "returnType": { "type": "object", "additionalProperties": true },
+  "errorTypes": ["EdsExtensionLookupError"],
+  "permissions": ["eds:read"],
+  "routing": {
+    "handlerModule": "edsGetExtension.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "GET", "path": "/eds/extension/:name" },
+    "cli": { "group": "eds", "command": "extension-template" },
+    "operationId": "edsGetExtensionTemplate"
+  }
+}

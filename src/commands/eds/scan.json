@@ -1,0 +1,4 @@
+{
+  "id": "eds.scan",
+  "description": "Scan local extension roots and rebuild runtime extension registry."
+}
