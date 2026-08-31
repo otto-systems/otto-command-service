@@ -1,0 +1,30 @@
+{
+  "name": "orchestrator.tierList.set",
+  "description": "Update ordered tier list for a display.",
+  "parameters": {
+    "type": "object",
+    "required": [],
+    "additionalProperties": true,
+    "properties": {
+      "displayId": { "type": "string" },
+      "patch": { "type": "object", "additionalProperties": true },
+      "tierList": { "type": "array", "items": { "type": "number" } },
+      "addTier": { "type": "number" },
+      "deleteTier": { "type": "number" },
+      "moveTier": { "type": "number" },
+      "toIndex": { "type": "number" },
+      "fallbackTier": { "type": "number" }
+    }
+  },
+  "returnType": { "type": "object", "additionalProperties": true },
+  "errorTypes": ["OrchestratorTierListError"],
+  "permissions": ["display:write"],
+  "routing": {
+    "handlerModule": "orchestratorTierListSet.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "POST", "path": "/v1/commands/orchestrator/tier-list/set" },
+    "cli": { "group": "orchestrator", "command": "tier-list-set" },
+    "operationId": "orchestratorTierListSet"
+  }
+}

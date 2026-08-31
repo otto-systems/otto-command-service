@@ -1,0 +1,21 @@
+{
+  "name": "orchestrator.displays.list",
+  "description": "List active and soft-deleted display ids.",
+  "parameters": {
+    "type": "object",
+    "required": [],
+    "additionalProperties": false,
+    "properties": {}
+  },
+  "returnType": { "type": "object", "additionalProperties": true },
+  "errorTypes": ["OrchestratorDisplaysError"],
+  "permissions": ["display:read"],
+  "routing": {
+    "handlerModule": "orchestratorDisplaysList.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "GET", "path": "/v1/commands/orchestrator/displays/list" },
+    "cli": { "group": "orchestrator", "command": "displays-list" },
+    "operationId": "orchestratorDisplaysList"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "name": "orchestrator.pageSettings.set",
+  "description": "Update per-page orchestrator settings for a page id.",
+  "parameters": {
+    "type": "object",
+    "required": ["pageId"],
+    "additionalProperties": true,
+    "properties": {
+      "pageId": { "type": "string" },
+      "displayId": { "type": "string" },
+      "patch": { "type": "object", "additionalProperties": true }
+    }
+  },
+  "returnType": { "type": "object", "additionalProperties": true },
+  "errorTypes": ["OrchestratorPageSettingsError"],
+  "permissions": ["display:write"],
+  "routing": {
+    "handlerModule": "orchestratorPageSettingsSet.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "POST", "path": "/v1/commands/orchestrator/page-settings/set" },
+    "cli": { "group": "orchestrator", "command": "page-settings-set" },
+    "operationId": "orchestratorPageSettingsSet"
+  }
+}

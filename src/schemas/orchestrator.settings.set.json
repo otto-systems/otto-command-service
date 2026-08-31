@@ -6,6 +6,7 @@
     "required": [],
     "additionalProperties": true,
     "properties": {
+      "displayId": { "type": "string" },
       "patch": { "type": "object", "additionalProperties": true }
     }
   },

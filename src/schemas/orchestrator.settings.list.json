@@ -4,8 +4,10 @@
   "parameters": {
     "type": "object",
     "required": [],
-    "additionalProperties": false,
-    "properties": {}
+    "additionalProperties": true,
+    "properties": {
+      "displayId": { "type": "string" }
+    }
   },
   "returnType": { "type": "array", "items": { "type": "object", "additionalProperties": true } },
   "errorTypes": ["OrchestratorSettingsError"],

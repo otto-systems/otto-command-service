@@ -1,0 +1,23 @@
+{
+  "name": "orchestrator.displays.delete",
+  "description": "Soft-delete a display id from active registry.",
+  "parameters": {
+    "type": "object",
+    "required": ["displayId"],
+    "additionalProperties": true,
+    "properties": {
+      "displayId": { "type": "string" }
+    }
+  },
+  "returnType": { "type": "object", "additionalProperties": true },
+  "errorTypes": ["OrchestratorDisplaysError"],
+  "permissions": ["display:write"],
+  "routing": {
+    "handlerModule": "orchestratorDisplaysDelete.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "POST", "path": "/v1/commands/orchestrator/displays/delete" },
+    "cli": { "group": "orchestrator", "command": "displays-delete" },
+    "operationId": "orchestratorDisplaysDelete"
+  }
+}

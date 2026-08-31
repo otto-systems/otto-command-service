@@ -1,0 +1,24 @@
+{
+  "name": "orchestrator.displays.sharePlaylist",
+  "description": "Copy playlist settings/pages/tier list from one display id to another.",
+  "parameters": {
+    "type": "object",
+    "required": ["targetDisplayId"],
+    "additionalProperties": true,
+    "properties": {
+      "sourceDisplayId": { "type": "string" },
+      "targetDisplayId": { "type": "string" }
+    }
+  },
+  "returnType": { "type": "object", "additionalProperties": true },
+  "errorTypes": ["OrchestratorDisplaysError"],
+  "permissions": ["display:write"],
+  "routing": {
+    "handlerModule": "orchestratorDisplaysSharePlaylist.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "POST", "path": "/v1/commands/orchestrator/displays/share-playlist" },
+    "cli": { "group": "orchestrator", "command": "displays-share-playlist" },
+    "operationId": "orchestratorDisplaysSharePlaylist"
+  }
+}

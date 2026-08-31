@@ -7,10 +7,12 @@
     "additionalProperties": false,
     "properties": {
       "name": { "type": "string" },
-      "type": { "type": "string", "enum": ["url", "inline-code"] },
+      "type": { "type": "string", "enum": ["url", "inline-code", "time", "weather", "custom", "emergency"] },
       "url": { "type": "string" },
       "code": { "type": "string" },
-      "pageId": { "type": "string" }
+      "pageId": { "type": "string" },
+      "displayId": { "type": "string" },
+      "tier": { "type": "number" }
     }
   },
   "returnType": { "type": "object", "additionalProperties": true },

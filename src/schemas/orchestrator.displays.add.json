@@ -1,0 +1,23 @@
+{
+  "name": "orchestrator.displays.add",
+  "description": "Add a display id to registry and initialize playlist files.",
+  "parameters": {
+    "type": "object",
+    "required": ["displayId"],
+    "additionalProperties": true,
+    "properties": {
+      "displayId": { "type": "string" }
+    }
+  },
+  "returnType": { "type": "object", "additionalProperties": true },
+  "errorTypes": ["OrchestratorDisplaysError"],
+  "permissions": ["display:write"],
+  "routing": {
+    "handlerModule": "orchestratorDisplaysAdd.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "POST", "path": "/v1/commands/orchestrator/displays/add" },
+    "cli": { "group": "orchestrator", "command": "displays-add" },
+    "operationId": "orchestratorDisplaysAdd"
+  }
+}

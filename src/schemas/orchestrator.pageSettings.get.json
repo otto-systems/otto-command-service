@@ -1,0 +1,24 @@
+{
+  "name": "orchestrator.pageSettings.get",
+  "description": "Get per-page orchestrator settings for a page id.",
+  "parameters": {
+    "type": "object",
+    "required": ["pageId"],
+    "additionalProperties": false,
+    "properties": {
+      "pageId": { "type": "string" },
+      "displayId": { "type": "string" }
+    }
+  },
+  "returnType": { "type": "object", "additionalProperties": true },
+  "errorTypes": ["OrchestratorPageSettingsError"],
+  "permissions": ["display:read"],
+  "routing": {
+    "handlerModule": "orchestratorPageSettingsGet.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "GET", "path": "/v1/commands/orchestrator/page-settings/get" },
+    "cli": { "group": "orchestrator", "command": "page-settings-get" },
+    "operationId": "orchestratorPageSettingsGet"
+  }
+}

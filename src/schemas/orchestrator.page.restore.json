@@ -1,0 +1,24 @@
+{
+  "name": "orchestrator.page.restore",
+  "description": "Restore a soft deleted page for a display.",
+  "parameters": {
+    "type": "object",
+    "required": ["pageId"],
+    "additionalProperties": true,
+    "properties": {
+      "displayId": { "type": "string" },
+      "pageId": { "type": "string" }
+    }
+  },
+  "returnType": { "type": "object", "additionalProperties": true },
+  "errorTypes": ["OrchestratorPageRestoreError"],
+  "permissions": ["display:write"],
+  "routing": {
+    "handlerModule": "orchestratorPageRestore.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "POST", "path": "/v1/commands/orchestrator/page/restore" },
+    "cli": { "group": "orchestrator", "command": "page-restore" },
+    "operationId": "orchestratorPageRestore"
+  }
+}

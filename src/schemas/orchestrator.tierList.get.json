@@ -1,0 +1,23 @@
+{
+  "name": "orchestrator.tierList.get",
+  "description": "Get ordered tier list for a display.",
+  "parameters": {
+    "type": "object",
+    "required": [],
+    "additionalProperties": true,
+    "properties": {
+      "displayId": { "type": "string" }
+    }
+  },
+  "returnType": { "type": "object", "additionalProperties": true },
+  "errorTypes": ["OrchestratorTierListError"],
+  "permissions": ["display:read"],
+  "routing": {
+    "handlerModule": "orchestratorTierListGet.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "GET", "path": "/v1/commands/orchestrator/tier-list/get" },
+    "cli": { "group": "orchestrator", "command": "tier-list-get" },
+    "operationId": "orchestratorTierListGet"
+  }
+}

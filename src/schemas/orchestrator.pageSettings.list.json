@@ -1,0 +1,30 @@
+{
+  "name": "orchestrator.pageSettings.list",
+  "description": "List per-page orchestrator settings.",
+  "parameters": {
+    "type": "object",
+    "required": [],
+    "additionalProperties": true,
+    "properties": {
+      "displayId": { "type": "string" },
+      "includeDeleted": { "type": "boolean" }
+    }
+  },
+  "returnType": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "pages": { "type": "array", "items": { "type": "object", "additionalProperties": true } }
+    }
+  },
+  "errorTypes": ["OrchestratorPageSettingsError"],
+  "permissions": ["display:read"],
+  "routing": {
+    "handlerModule": "orchestratorPageSettingsList.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "GET", "path": "/v1/commands/orchestrator/page-settings/list" },
+    "cli": { "group": "orchestrator", "command": "page-settings-list" },
+    "operationId": "orchestratorPageSettingsList"
+  }
+}
