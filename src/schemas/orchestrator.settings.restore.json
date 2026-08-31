@@ -1,0 +1,24 @@
+{
+  "name": "orchestrator.settings.restore",
+  "description": "Restore orchestrator settings and pages from a provided payload.",
+  "parameters": {
+    "type": "object",
+    "required": ["settings"],
+    "additionalProperties": true,
+    "properties": {
+      "settings": { "type": "object", "additionalProperties": true },
+      "pages": { "type": "array", "items": { "type": "object", "additionalProperties": true } }
+    }
+  },
+  "returnType": { "type": "object", "additionalProperties": true },
+  "errorTypes": ["OrchestratorSettingsRestoreError"],
+  "permissions": ["display:write", "file:write"],
+  "routing": {
+    "handlerModule": "orchestratorSettingsRestore.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "POST", "path": "/v1/commands/orchestrator/settings/restore" },
+    "cli": { "group": "orchestrator", "command": "settings-restore" },
+    "operationId": "orchestratorSettingsRestore"
+  }
+}

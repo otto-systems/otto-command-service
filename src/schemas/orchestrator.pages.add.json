@@ -1,0 +1,27 @@
+{
+  "name": "orchestrator.pages.add",
+  "description": "Add a persisted orchestrator page (url or inline-code).",
+  "parameters": {
+    "type": "object",
+    "required": ["name", "type"],
+    "additionalProperties": false,
+    "properties": {
+      "name": { "type": "string" },
+      "type": { "type": "string", "enum": ["url", "inline-code"] },
+      "url": { "type": "string" },
+      "code": { "type": "string" },
+      "pageId": { "type": "string" }
+    }
+  },
+  "returnType": { "type": "object", "additionalProperties": true },
+  "errorTypes": ["OrchestratorPagesError"],
+  "permissions": ["display:write", "file:write"],
+  "routing": {
+    "handlerModule": "orchestratorPagesAdd.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "POST", "path": "/v1/commands/orchestrator/pages/add" },
+    "cli": { "group": "orchestrator", "command": "pages-add" },
+    "operationId": "orchestratorPagesAdd"
+  }
+}

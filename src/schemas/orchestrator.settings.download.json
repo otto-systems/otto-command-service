@@ -1,0 +1,21 @@
+{
+  "name": "orchestrator.settings.download",
+  "description": "Download orchestrator settings and pages snapshot.",
+  "parameters": {
+    "type": "object",
+    "required": [],
+    "additionalProperties": false,
+    "properties": {}
+  },
+  "returnType": { "type": "object", "additionalProperties": true },
+  "errorTypes": ["OrchestratorSettingsError"],
+  "permissions": ["display:read"],
+  "routing": {
+    "handlerModule": "orchestratorSettingsDownload.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "GET", "path": "/v1/commands/orchestrator/settings/download" },
+    "cli": { "group": "orchestrator", "command": "settings-download" },
+    "operationId": "orchestratorSettingsDownload"
+  }
+}

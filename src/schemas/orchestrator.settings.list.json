@@ -1,0 +1,21 @@
+{
+  "name": "orchestrator.settings.list",
+  "description": "List available display orchestrator settings snapshots.",
+  "parameters": {
+    "type": "object",
+    "required": [],
+    "additionalProperties": false,
+    "properties": {}
+  },
+  "returnType": { "type": "array", "items": { "type": "object", "additionalProperties": true } },
+  "errorTypes": ["OrchestratorSettingsError"],
+  "permissions": ["display:read"],
+  "routing": {
+    "handlerModule": "orchestratorSettingsList.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "GET", "path": "/v1/commands/orchestrator/settings/list" },
+    "cli": { "group": "orchestrator", "command": "settings-list" },
+    "operationId": "orchestratorSettingsList"
+  }
+}

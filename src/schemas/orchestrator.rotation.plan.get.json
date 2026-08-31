@@ -1,0 +1,21 @@
+{
+  "name": "orchestrator.rotation.plan.get",
+  "description": "Build current rotation plan using persisted orchestrator settings.",
+  "parameters": {
+    "type": "object",
+    "required": [],
+    "additionalProperties": false,
+    "properties": {}
+  },
+  "returnType": { "type": "object", "additionalProperties": true },
+  "errorTypes": ["OrchestratorRotationPlanError"],
+  "permissions": ["display:read"],
+  "routing": {
+    "handlerModule": "orchestratorRotationPlanGet.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "GET", "path": "/v1/commands/orchestrator/rotation/plan/get" },
+    "cli": { "group": "orchestrator", "command": "rotation-plan-get" },
+    "operationId": "orchestratorRotationPlanGet"
+  }
+}

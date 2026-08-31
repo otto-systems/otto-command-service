@@ -1,0 +1,33 @@
+{
+  "name": "file.delete",
+  "description": "Delete a managed file or directory path.",
+  "parameters": {
+    "type": "object",
+    "required": ["path"],
+    "additionalProperties": false,
+    "properties": {
+      "path": { "type": "string" },
+      "recursive": { "type": "boolean" },
+      "force": { "type": "boolean" }
+    }
+  },
+  "returnType": {
+    "type": "object",
+    "required": ["ok", "path"],
+    "additionalProperties": false,
+    "properties": {
+      "ok": { "type": "boolean" },
+      "path": { "type": "string" }
+    }
+  },
+  "errorTypes": ["FileDeleteError"],
+  "permissions": ["file:write"],
+  "routing": {
+    "handlerModule": "fileDelete.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "POST", "path": "/v1/commands/file/delete" },
+    "cli": { "group": "file", "command": "delete" },
+    "operationId": "fileDelete"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "name": "orchestrator.settings.set",
+  "description": "Update display orchestrator settings.",
+  "parameters": {
+    "type": "object",
+    "required": [],
+    "additionalProperties": true,
+    "properties": {
+      "patch": { "type": "object", "additionalProperties": true }
+    }
+  },
+  "returnType": { "type": "object", "additionalProperties": true },
+  "errorTypes": ["OrchestratorSettingsError"],
+  "permissions": ["display:write"],
+  "routing": {
+    "handlerModule": "orchestratorSettingsSet.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "POST", "path": "/v1/commands/orchestrator/settings/set" },
+    "cli": { "group": "orchestrator", "command": "settings-set" },
+    "operationId": "orchestratorSettingsSet"
+  }
+}

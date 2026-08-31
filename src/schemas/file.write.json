@@ -1,0 +1,33 @@
+{
+  "name": "file.write",
+  "description": "Write UTF-8 content to a managed workspace path.",
+  "parameters": {
+    "type": "object",
+    "required": ["path", "content"],
+    "additionalProperties": false,
+    "properties": {
+      "path": { "type": "string" },
+      "content": { "type": "string" }
+    }
+  },
+  "returnType": {
+    "type": "object",
+    "required": ["ok", "path", "bytes"],
+    "additionalProperties": false,
+    "properties": {
+      "ok": { "type": "boolean" },
+      "path": { "type": "string" },
+      "bytes": { "type": "number" }
+    }
+  },
+  "errorTypes": ["FileWriteError"],
+  "permissions": ["file:write"],
+  "routing": {
+    "handlerModule": "fileWrite.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "POST", "path": "/v1/commands/file/write" },
+    "cli": { "group": "file", "command": "write" },
+    "operationId": "fileWrite"
+  }
+}

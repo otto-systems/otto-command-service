@@ -1,0 +1,42 @@
+{
+  "name": "file.list",
+  "description": "List files and directories at a managed workspace path.",
+  "parameters": {
+    "type": "object",
+    "required": ["path"],
+    "additionalProperties": false,
+    "properties": {
+      "path": { "type": "string" }
+    }
+  },
+  "returnType": {
+    "type": "object",
+    "required": ["path", "items"],
+    "additionalProperties": false,
+    "properties": {
+      "path": { "type": "string" },
+      "items": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": ["name", "type"],
+          "additionalProperties": false,
+          "properties": {
+            "name": { "type": "string" },
+            "type": { "type": "string", "enum": ["file", "directory"] }
+          }
+        }
+      }
+    }
+  },
+  "errorTypes": ["FileListError"],
+  "permissions": ["file:read"],
+  "routing": {
+    "handlerModule": "fileList.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "POST", "path": "/v1/commands/file/list" },
+    "cli": { "group": "file", "command": "list" },
+    "operationId": "fileList"
+  }
+}

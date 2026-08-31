@@ -1,0 +1,31 @@
+{
+  "name": "file.read",
+  "description": "Read a UTF-8 text file from a managed workspace path.",
+  "parameters": {
+    "type": "object",
+    "required": ["path"],
+    "additionalProperties": false,
+    "properties": {
+      "path": { "type": "string" }
+    }
+  },
+  "returnType": {
+    "type": "object",
+    "required": ["path", "content"],
+    "additionalProperties": false,
+    "properties": {
+      "path": { "type": "string" },
+      "content": { "type": "string" }
+    }
+  },
+  "errorTypes": ["FileReadError"],
+  "permissions": ["file:read"],
+  "routing": {
+    "handlerModule": "fileRead.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "POST", "path": "/v1/commands/file/read" },
+    "cli": { "group": "file", "command": "read" },
+    "operationId": "fileRead"
+  }
+}

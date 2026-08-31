@@ -1,0 +1,21 @@
+{
+  "name": "orchestrator.pages.list",
+  "description": "List persisted orchestrator pages.",
+  "parameters": {
+    "type": "object",
+    "required": [],
+    "additionalProperties": false,
+    "properties": {}
+  },
+  "returnType": { "type": "object", "additionalProperties": true },
+  "errorTypes": ["OrchestratorPagesError"],
+  "permissions": ["display:read"],
+  "routing": {
+    "handlerModule": "orchestratorPagesList.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "GET", "path": "/v1/commands/orchestrator/pages/list" },
+    "cli": { "group": "orchestrator", "command": "pages-list" },
+    "operationId": "orchestratorPagesList"
+  }
+}
