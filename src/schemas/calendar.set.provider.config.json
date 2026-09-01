@@ -1,0 +1,43 @@
+{
+  "name": "calendar.set.provider.config",
+  "description": "Save OAuth credentials for a calendar provider (Microsoft, Google, etc).",
+  "parameters": {
+    "type": "object",
+    "required": ["providerId"],
+    "additionalProperties": false,
+    "properties": {
+      "providerId": {
+        "type": "string",
+        "enum": ["microsoft", "google"],
+        "description": "Provider ID (microsoft or google)"
+      },
+      "clientId": {
+        "type": "string",
+        "description": "OAuth 2.0 Client ID"
+      },
+      "clientSecret": {
+        "type": "string",
+        "description": "OAuth 2.0 Client Secret"
+      }
+    }
+  },
+  "returnType": {
+    "type": "object",
+    "properties": {
+      "providerId": { "type": "string" },
+      "name": { "type": "string" },
+      "isConfigured": { "type": "boolean" },
+      "message": { "type": "string" }
+    }
+  },
+  "errorTypes": ["CalendarConfigError", "ValidationError"],
+  "permissions": ["calendar:write"],
+  "routing": {
+    "handlerModule": "calendarSetProviderConfig.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "POST", "path": "/v1/commands/calendar/providers" },
+    "cli": { "group": "calendar", "command": "set-provider" },
+    "operationId": "calendarSetProviderConfig"
+  }
+}

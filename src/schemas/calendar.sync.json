@@ -1,0 +1,46 @@
+{
+  "name": "calendar.sync",
+  "description": "Trigger synchronization of calendar events from configured providers.",
+  "parameters": {
+    "type": "object",
+    "required": [],
+    "additionalProperties": false,
+    "properties": {
+      "providerId": {
+        "type": "string",
+        "description": "Optional provider ID (microsoft or google). If omitted, syncs all configured providers."
+      }
+    }
+  },
+  "returnType": {
+    "type": "object",
+    "properties": {
+      "providers": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "providerId": { "type": "string" },
+            "status": { "type": "string", "enum": ["success", "failed", "skipped"] },
+            "eventCount": { "type": "number" },
+            "error": { "type": "string" },
+            "syncedAt": { "type": "string" }
+          }
+        }
+      },
+      "totalEventCount": { "type": "number" },
+      "generatedAt": { "type": "string" }
+    },
+    "additionalProperties": false
+  },
+  "errorTypes": ["CalendarSyncError", "CalendarAuthError"],
+  "permissions": ["calendar:write"],
+  "routing": {
+    "handlerModule": "calendarSync.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "POST", "path": "/v1/commands/calendar/sync" },
+    "cli": { "group": "calendar", "command": "sync" },
+    "operationId": "calendarSync"
+  }
+}

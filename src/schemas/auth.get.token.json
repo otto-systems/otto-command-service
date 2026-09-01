@@ -1,0 +1,35 @@
+{
+  "name": "auth.get.token",
+  "description": "Get authentication token for a specific provider. Returns null if no session is active.",
+  "parameters": {
+    "type": "object",
+    "required": [],
+    "additionalProperties": false,
+    "properties": {
+      "providerId": {
+        "type": "string",
+        "description": "Optional provider ID. If omitted, returns token for the default provider."
+      }
+    }
+  },
+  "returnType": {
+    "type": ["object", "null"],
+    "properties": {
+      "value": { "type": "string" },
+      "providerId": { "type": "string" },
+      "issuedAt": { "type": "string" },
+      "expiresAt": { "type": ["string", "null"] }
+    },
+    "additionalProperties": false
+  },
+  "errorTypes": ["AuthProviderError", "AuthSessionError"],
+  "permissions": ["auth:read"],
+  "routing": {
+    "handlerModule": "authGetToken.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "GET", "path": "/v1/commands/auth/token" },
+    "cli": { "group": "auth", "command": "get-token" },
+    "operationId": "authGetToken"
+  }
+}

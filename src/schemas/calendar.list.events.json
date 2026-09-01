@@ -1,0 +1,51 @@
+{
+  "name": "calendar.list.events",
+  "description": "Retrieve normalized calendar events from configured providers for a date range.",
+  "parameters": {
+    "type": "object",
+    "required": ["startDate", "endDate"],
+    "additionalProperties": false,
+    "properties": {
+      "providerId": {
+        "type": "string",
+        "description": "Optional provider ID (microsoft or google). Defaults to microsoft if omitted."
+      },
+      "startDate": {
+        "type": "string",
+        "description": "ISO 8601 date (YYYY-MM-DD) for query start."
+      },
+      "endDate": {
+        "type": "string",
+        "description": "ISO 8601 date (YYYY-MM-DD) for query end."
+      },
+      "includeRaw": {
+        "type": "boolean",
+        "description": "Include raw provider API response in event details (for debugging)."
+      }
+    }
+  },
+  "returnType": {
+    "type": "object",
+    "properties": {
+      "events": {
+        "type": "array",
+        "items": { "type": "object" }
+      },
+      "totalCount": { "type": "number" },
+      "provider": { "type": "string" },
+      "requestedRange": { "type": "object" },
+      "generatedAt": { "type": "string" }
+    },
+    "additionalProperties": false
+  },
+  "errorTypes": ["CalendarProviderError", "CalendarAuthError", "CalendarAPIError"],
+  "permissions": ["calendar:read"],
+  "routing": {
+    "handlerModule": "calendarListEvents.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "GET", "path": "/v1/commands/calendar/events" },
+    "cli": { "group": "calendar", "command": "list-events" },
+    "operationId": "calendarListEvents"
+  }
+}

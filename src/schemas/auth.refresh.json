@@ -1,0 +1,36 @@
+{
+  "name": "auth.refresh",
+  "description": "Refresh authentication session for a specific provider.",
+  "parameters": {
+    "type": "object",
+    "required": [],
+    "additionalProperties": false,
+    "properties": {
+      "providerId": {
+        "type": "string",
+        "description": "Optional provider ID. If omitted, refreshes the default provider."
+      }
+    }
+  },
+  "returnType": {
+    "type": "object",
+    "properties": {
+      "providerId": { "type": "string" },
+      "status": { "type": "string", "enum": ["idle", "authenticated", "logged-out", "placeholder"] },
+      "user": { "type": ["object", "null"] },
+      "token": { "type": ["object", "null"] },
+      "message": { "type": "string" }
+    },
+    "additionalProperties": false
+  },
+  "errorTypes": ["AuthProviderError", "AuthRefreshError"],
+  "permissions": ["auth:write"],
+  "routing": {
+    "handlerModule": "authRefresh.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "POST", "path": "/v1/commands/auth/refresh" },
+    "cli": { "group": "auth", "command": "refresh" },
+    "operationId": "authRefresh"
+  }
+}

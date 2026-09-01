@@ -1,0 +1,39 @@
+{
+  "name": "calendar.get.provider.config",
+  "description": "Get configuration and authentication status for calendar providers.",
+  "parameters": {
+    "type": "object",
+    "required": [],
+    "additionalProperties": false,
+    "properties": {
+      "providerId": {
+        "type": "string",
+        "description": "Optional provider ID. If omitted, returns config for all providers."
+      }
+    }
+  },
+  "returnType": {
+    "type": "array",
+    "items": {
+      "type": "object",
+      "properties": {
+        "providerId": { "type": "string" },
+        "name": { "type": "string" },
+        "isConfigured": { "type": "boolean" },
+        "isAuthenticated": { "type": "boolean" },
+        "lastSyncAt": { "type": ["string", "null"] },
+        "error": { "type": ["string", "null"] }
+      }
+    }
+  },
+  "errorTypes": ["CalendarConfigError"],
+  "permissions": ["calendar:read"],
+  "routing": {
+    "handlerModule": "calendarGetProviderConfig.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "GET", "path": "/v1/commands/calendar/providers" },
+    "cli": { "group": "calendar", "command": "get-providers" },
+    "operationId": "calendarGetProviderConfig"
+  }
+}

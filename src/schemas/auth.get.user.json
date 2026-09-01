@@ -1,0 +1,36 @@
+{
+  "name": "auth.get.user",
+  "description": "Get user information for a specific provider. Returns null if no user is authenticated.",
+  "parameters": {
+    "type": "object",
+    "required": [],
+    "additionalProperties": false,
+    "properties": {
+      "providerId": {
+        "type": "string",
+        "description": "Optional provider ID. If omitted, returns user info for the default provider."
+      }
+    }
+  },
+  "returnType": {
+    "type": ["object", "null"],
+    "properties": {
+      "id": { "type": "string" },
+      "name": { "type": "string" },
+      "email": { "type": ["string", "null"] },
+      "providerId": { "type": "string" },
+      "claims": { "type": "object" }
+    },
+    "additionalProperties": false
+  },
+  "errorTypes": ["AuthProviderError", "AuthSessionError"],
+  "permissions": ["auth:read"],
+  "routing": {
+    "handlerModule": "authGetUser.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "GET", "path": "/v1/commands/auth/user" },
+    "cli": { "group": "auth", "command": "get-user" },
+    "operationId": "authGetUser"
+  }
+}
