@@ -9,7 +9,6 @@ const DISPLAY_REGISTRY_PATH = `${DISPLAY_ROOT}/displays.json`;
 const SOFT_DELETE_RETENTION_MS = 30 * 24 * 60 * 60 * 1000;
 
 const BUILTIN_PAGES = [
-  { id: "emergency", name: "Emergency Tier", type: "emergency" },
   { id: "hallway", name: "Hallway", type: "custom" },
   { id: "weather", name: "Weather", type: "weather" },
   { id: "time", name: "Time", type: "time" }
@@ -122,6 +121,40 @@ function normalizeTierList(tierList = [], knownPages = []) {
   }
 
   return [0, ...normalized.filter((tier) => tier !== 0)];
+}
+
+function normalizeTierNames(rawTierNames, tierList = []) {
+  const source = rawTierNames && typeof rawTierNames === "object" ? rawTierNames : {};
+  const next = {
+    "0": "Emergency"
+  };
+
+  for (const tier of tierList) {
+    const key = String(tier);
+    if (key === "0") continue;
+    if (typeof source[key] === "string" && source[key].trim()) {
+      next[key] = source[key].trim();
+    } else {
+      next[key] = `Tier ${tier}`;
+    }
+  }
+
+  return next;
+}
+
+function normalizePlaylistOrder(value) {
+  return value === "shuffle" ? "shuffle" : "priority";
+}
+
+function normalizeManualPageOrder(input, pageIds = []) {
+  const source = Array.isArray(input) ? input.filter((entry) => typeof entry === "string") : [];
+  const next = source.filter((entry) => pageIds.includes(entry));
+  for (const pageId of pageIds) {
+    if (!next.includes(pageId)) {
+      next.push(pageId);
+    }
+  }
+  return next;
 }
 
 function normalizeTimeSettings(input) {
@@ -370,7 +403,15 @@ function normalizeSettingsShape(rawSettings, pages, tierListInput, displayId = D
     }
 
     const tierList = normalizeTierList(rawSettings.tierList ?? tierListInput, Object.values(normalizedPages));
-    return { pages: normalizedPages, tierList };
+    const pageIds = Object.keys(normalizedPages);
+    return {
+      pages: normalizedPages,
+      tierList,
+      tierNames: normalizeTierNames(rawSettings.tierNames, tierList),
+      playlistOrder: normalizePlaylistOrder(rawSettings.playlistOrder),
+      shuffleSeed: Number.isFinite(Number(rawSettings.shuffleSeed)) ? Number(rawSettings.shuffleSeed) : undefined,
+      manualPageOrder: normalizeManualPageOrder(rawSettings.manualPageOrder, pageIds)
+    };
   }
 
   const enabledPages = Array.isArray(rawSettings?.enabledPages)
@@ -407,7 +448,15 @@ function normalizeSettingsShape(rawSettings, pages, tierListInput, displayId = D
   }
 
   const tierList = normalizeTierList(tierListInput, Object.values(normalizedPages));
-  return { pages: normalizedPages, tierList };
+  const pageIds = Object.keys(normalizedPages);
+  return {
+    pages: normalizedPages,
+    tierList,
+    tierNames: normalizeTierNames(rawSettings?.tierNames, tierList),
+    playlistOrder: normalizePlaylistOrder(rawSettings?.playlistOrder),
+    shuffleSeed: Number.isFinite(Number(rawSettings?.shuffleSeed)) ? Number(rawSettings.shuffleSeed) : undefined,
+    manualPageOrder: normalizeManualPageOrder(rawSettings?.manualPageOrder, pageIds)
+  };
 }
 
 function applyLegacyPatchToPerPageSettings(current, patch) {
@@ -619,7 +668,14 @@ export async function setTierList(displayId = DEFAULT_DISPLAY_ID, patch = {}) {
 
   tierList = normalizeTierList(tierList, pages);
   await writeJson(paths.tierListPath, tierList);
-  await saveSettings({ pages: settings.pages, tierList }, displayId, { internalPatch: true, skipCleanup: true });
+  await saveSettings({
+    pages: settings.pages,
+    tierList,
+    tierNames: settings.tierNames,
+    playlistOrder: settings.playlistOrder,
+    shuffleSeed: settings.shuffleSeed,
+    manualPageOrder: settings.manualPageOrder
+  }, displayId, { internalPatch: true, skipCleanup: true });
   return { tierList };
 }
 
@@ -681,7 +737,11 @@ export async function saveSettings(patch = {}, displayId = DEFAULT_DISPLAY_ID, o
 
   const finalSettings = {
     pages: lockedPages,
-    tierList: normalizeTierList(normalized.tierList, Object.values(lockedPages))
+    tierList: normalizeTierList(normalized.tierList, Object.values(lockedPages)),
+    tierNames: normalizeTierNames(normalized.tierNames, normalized.tierList),
+    playlistOrder: normalizePlaylistOrder(normalized.playlistOrder),
+    shuffleSeed: Number.isFinite(Number(normalized.shuffleSeed)) ? Number(normalized.shuffleSeed) : undefined,
+    manualPageOrder: normalizeManualPageOrder(normalized.manualPageOrder, Object.keys(lockedPages))
   };
 
   await writeJson(paths.settingsPath, finalSettings);
