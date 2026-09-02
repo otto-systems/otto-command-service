@@ -1,0 +1,25 @@
+{
+  "name": "schedule.calculate.phase",
+  "description": "Calculate schedule phase status for the selected day and timestamp.",
+  "parameters": {
+    "type": "object",
+    "required": ["schedule"],
+    "additionalProperties": false,
+    "properties": {
+      "schedule": { "type": "object", "additionalProperties": true },
+      "dayName": { "type": "string" },
+      "now": { "type": "string" }
+    }
+  },
+  "returnType": { "type": "object", "additionalProperties": true },
+  "errorTypes": ["ScheduleCalculatePhaseError"],
+  "permissions": ["schedule:read"],
+  "routing": {
+    "handlerModule": "scheduleCalculatePhase.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "POST", "path": "/v1/commands/schedule/calculate-phase" },
+    "cli": { "group": "schedule", "command": "calculate-phase" },
+    "operationId": "scheduleCalculatePhase"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "name": "schedule.get.current",
+  "description": "Resolve the active and next schedule periods for a day.",
+  "parameters": {
+    "type": "object",
+    "required": ["schedule"],
+    "additionalProperties": false,
+    "properties": {
+      "schedule": { "type": "object", "additionalProperties": true },
+      "dayName": { "type": "string" },
+      "now": { "type": "string" }
+    }
+  },
+  "returnType": { "type": "object", "additionalProperties": true },
+  "errorTypes": ["ScheduleCurrentError"],
+  "permissions": ["schedule:read"],
+  "routing": {
+    "handlerModule": "scheduleGetCurrent.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "POST", "path": "/v1/commands/schedule/current" },
+    "cli": { "group": "schedule", "command": "current" },
+    "operationId": "scheduleGetCurrent"
+  }
+}
