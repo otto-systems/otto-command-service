@@ -1,0 +1,16 @@
+{
+  "name": "update.config.set",
+  "description": "Patch OttoUpdate runtime configuration.",
+  "parameters": { "type": "object", "required": [], "additionalProperties": true, "properties": {} },
+  "returnType": { "type": "object", "additionalProperties": true },
+  "errorTypes": ["UpdateConfigWriteError"],
+  "permissions": ["update:manage"],
+  "routing": {
+    "handlerModule": "updateConfigSet.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "PUT", "path": "/v1/commands/update/config" },
+    "cli": { "group": "update", "command": "config-set" },
+    "operationId": "updateConfigSet"
+  }
+}

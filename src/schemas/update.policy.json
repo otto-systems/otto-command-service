@@ -1,0 +1,16 @@
+{
+  "name": "update.policy",
+  "description": "Read OttoUpdate policy decision.",
+  "parameters": { "type": "object", "required": [], "additionalProperties": false, "properties": {} },
+  "returnType": { "type": "object", "additionalProperties": true },
+  "errorTypes": ["UpdatePolicyError"],
+  "permissions": ["update:read"],
+  "routing": {
+    "handlerModule": "updatePolicy.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "GET", "path": "/v1/commands/update/policy" },
+    "cli": { "group": "update", "command": "policy" },
+    "operationId": "updatePolicy"
+  }
+}

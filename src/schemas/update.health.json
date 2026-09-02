@@ -1,0 +1,16 @@
+{
+  "name": "update.health",
+  "description": "Read OttoUpdate health status.",
+  "parameters": { "type": "object", "required": [], "additionalProperties": false, "properties": {} },
+  "returnType": { "type": "object", "additionalProperties": true },
+  "errorTypes": ["UpdateHealthError"],
+  "permissions": ["update:read"],
+  "routing": {
+    "handlerModule": "updateHealth.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "GET", "path": "/v1/commands/update/health" },
+    "cli": { "group": "update", "command": "health" },
+    "operationId": "updateHealth"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "update.backups",
+  "description": "List OttoUpdate backup records.",
+  "parameters": { "type": "object", "required": [], "additionalProperties": false, "properties": {} },
+  "returnType": { "type": "object", "additionalProperties": true },
+  "errorTypes": ["UpdateBackupsError"],
+  "permissions": ["update:read"],
+  "routing": {
+    "handlerModule": "updateBackups.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "GET", "path": "/v1/commands/update/backups" },
+    "cli": { "group": "update", "command": "backups" },
+    "operationId": "updateBackups"
+  }
+}

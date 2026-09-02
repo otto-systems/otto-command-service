@@ -1,0 +1,16 @@
+{
+  "name": "update.progress",
+  "description": "Read OttoUpdate progress data.",
+  "parameters": { "type": "object", "required": [], "additionalProperties": false, "properties": {} },
+  "returnType": { "type": ["object", "null"], "additionalProperties": true },
+  "errorTypes": ["UpdateProgressError"],
+  "permissions": ["update:read"],
+  "routing": {
+    "handlerModule": "updateProgress.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "GET", "path": "/v1/commands/update/progress" },
+    "cli": { "group": "update", "command": "progress" },
+    "operationId": "updateProgress"
+  }
+}

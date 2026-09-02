@@ -1,0 +1,16 @@
+{
+  "name": "update.check",
+  "description": "Trigger an OttoUpdate check cycle.",
+  "parameters": { "type": "object", "required": [], "additionalProperties": false, "properties": {} },
+  "returnType": { "type": "object", "additionalProperties": true },
+  "errorTypes": ["UpdateCheckError"],
+  "permissions": ["update:manage"],
+  "routing": {
+    "handlerModule": "updateCheck.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "POST", "path": "/v1/commands/update/check" },
+    "cli": { "group": "update", "command": "check" },
+    "operationId": "updateCheck"
+  }
+}

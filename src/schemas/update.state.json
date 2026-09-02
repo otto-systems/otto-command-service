@@ -1,0 +1,16 @@
+{
+  "name": "update.state",
+  "description": "Read OttoUpdate state payload.",
+  "parameters": { "type": "object", "required": [], "additionalProperties": false, "properties": {} },
+  "returnType": { "type": "object", "additionalProperties": true },
+  "errorTypes": ["UpdateStateError"],
+  "permissions": ["update:read"],
+  "routing": {
+    "handlerModule": "updateState.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "GET", "path": "/v1/commands/update/state" },
+    "cli": { "group": "update", "command": "state" },
+    "operationId": "updateState"
+  }
+}

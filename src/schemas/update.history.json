@@ -1,0 +1,24 @@
+{
+  "name": "update.history",
+  "description": "Read OttoUpdate history entries.",
+  "parameters": {
+    "type": "object",
+    "required": [],
+    "additionalProperties": false,
+    "properties": {
+      "limit": { "type": "number", "default": 50, "minimum": 1 },
+      "offset": { "type": "number", "default": 0, "minimum": 0 }
+    }
+  },
+  "returnType": { "type": "object", "additionalProperties": true },
+  "errorTypes": ["UpdateHistoryError"],
+  "permissions": ["update:read"],
+  "routing": {
+    "handlerModule": "updateHistory.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "GET", "path": "/v1/commands/update/history" },
+    "cli": { "group": "update", "command": "history" },
+    "operationId": "updateHistory"
+  }
+}

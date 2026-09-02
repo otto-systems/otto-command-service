@@ -1,0 +1,24 @@
+{
+  "name": "update.defer",
+  "description": "Defer a pending OttoUpdate check.",
+  "parameters": {
+    "type": "object",
+    "required": ["check_id", "defer_seconds"],
+    "additionalProperties": false,
+    "properties": {
+      "check_id": { "type": "string" },
+      "defer_seconds": { "type": "number", "minimum": 1 }
+    }
+  },
+  "returnType": { "type": "object", "additionalProperties": true },
+  "errorTypes": ["UpdateDeferError"],
+  "permissions": ["update:manage"],
+  "routing": {
+    "handlerModule": "updateDefer.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "POST", "path": "/v1/commands/update/defer" },
+    "cli": { "group": "update", "command": "defer" },
+    "operationId": "updateDefer"
+  }
+}

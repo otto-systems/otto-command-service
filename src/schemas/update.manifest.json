@@ -1,0 +1,16 @@
+{
+  "name": "update.manifest",
+  "description": "Read current OttoUpdate manifest.",
+  "parameters": { "type": "object", "required": [], "additionalProperties": false, "properties": {} },
+  "returnType": { "type": "object", "additionalProperties": true },
+  "errorTypes": ["UpdateManifestError"],
+  "permissions": ["update:read"],
+  "routing": {
+    "handlerModule": "updateManifest.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "GET", "path": "/v1/commands/update/manifest" },
+    "cli": { "group": "update", "command": "manifest" },
+    "operationId": "updateManifest"
+  }
+}

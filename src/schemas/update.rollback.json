@@ -1,0 +1,16 @@
+{
+  "name": "update.rollback",
+  "description": "Trigger OttoUpdate rollback.",
+  "parameters": { "type": "object", "required": [], "additionalProperties": false, "properties": {} },
+  "returnType": { "type": "object", "additionalProperties": true },
+  "errorTypes": ["UpdateRollbackError"],
+  "permissions": ["update:manage"],
+  "routing": {
+    "handlerModule": "updateRollback.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "POST", "path": "/v1/commands/update/rollback" },
+    "cli": { "group": "update", "command": "rollback" },
+    "operationId": "updateRollback"
+  }
+}

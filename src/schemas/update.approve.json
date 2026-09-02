@@ -1,0 +1,23 @@
+{
+  "name": "update.approve",
+  "description": "Approve a pending OttoUpdate check.",
+  "parameters": {
+    "type": "object",
+    "required": ["check_id"],
+    "additionalProperties": false,
+    "properties": {
+      "check_id": { "type": "string" }
+    }
+  },
+  "returnType": { "type": "object", "additionalProperties": true },
+  "errorTypes": ["UpdateApproveError"],
+  "permissions": ["update:manage"],
+  "routing": {
+    "handlerModule": "updateApprove.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "POST", "path": "/v1/commands/update/approve" },
+    "cli": { "group": "update", "command": "approve" },
+    "operationId": "updateApprove"
+  }
+}
