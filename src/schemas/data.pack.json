@@ -1,0 +1,36 @@
+{
+  "name": "data.pack",
+  "description": "Package and compress UTF-8 payload content for transfer.",
+  "parameters": {
+    "type": "object",
+    "required": ["content"],
+    "additionalProperties": false,
+    "properties": {
+      "content": { "type": "string" },
+      "codec": { "type": "string", "enum": ["none", "gzip", "brotli"] }
+    }
+  },
+  "returnType": {
+    "type": "object",
+    "required": ["encoded", "codec", "encoding", "originalBytes", "packagedBytes", "compressionRatio"],
+    "additionalProperties": false,
+    "properties": {
+      "encoded": { "type": "string" },
+      "codec": { "type": "string" },
+      "encoding": { "type": "string" },
+      "originalBytes": { "type": "number" },
+      "packagedBytes": { "type": "number" },
+      "compressionRatio": { "type": "number" }
+    }
+  },
+  "errorTypes": ["DataPackError"],
+  "permissions": ["data:write"],
+  "routing": {
+    "handlerModule": "dataPack.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "POST", "path": "/v1/commands/data/pack" },
+    "cli": { "group": "data", "command": "pack" },
+    "operationId": "dataPack"
+  }
+}

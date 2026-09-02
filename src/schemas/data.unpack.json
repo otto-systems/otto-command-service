@@ -1,0 +1,35 @@
+{
+  "name": "data.unpack",
+  "description": "Decode and decompress a packaged payload.",
+  "parameters": {
+    "type": "object",
+    "required": ["encoded"],
+    "additionalProperties": false,
+    "properties": {
+      "encoded": { "type": "string" },
+      "codec": { "type": "string", "enum": ["none", "gzip", "brotli"] }
+    }
+  },
+  "returnType": {
+    "type": "object",
+    "required": ["content", "codec", "encoding", "packagedBytes", "unpackedBytes"],
+    "additionalProperties": false,
+    "properties": {
+      "content": { "type": "string" },
+      "codec": { "type": "string" },
+      "encoding": { "type": "string" },
+      "packagedBytes": { "type": "number" },
+      "unpackedBytes": { "type": "number" }
+    }
+  },
+  "errorTypes": ["DataUnpackError"],
+  "permissions": ["data:read"],
+  "routing": {
+    "handlerModule": "dataUnpack.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "POST", "path": "/v1/commands/data/unpack" },
+    "cli": { "group": "data", "command": "unpack" },
+    "operationId": "dataUnpack"
+  }
+}

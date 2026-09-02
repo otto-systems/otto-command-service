@@ -1,0 +1,37 @@
+{
+  "name": "data.records.export",
+  "description": "Export records into deterministic JSON or JSONL payload text.",
+  "parameters": {
+    "type": "object",
+    "required": ["records"],
+    "additionalProperties": false,
+    "properties": {
+      "records": {
+        "type": "array",
+        "items": { "type": "object", "additionalProperties": true }
+      },
+      "format": { "type": "string", "enum": ["json", "jsonl"] },
+      "pretty": { "type": "boolean" }
+    }
+  },
+  "returnType": {
+    "type": "object",
+    "required": ["body", "format", "count"],
+    "additionalProperties": false,
+    "properties": {
+      "body": { "type": "string" },
+      "format": { "type": "string" },
+      "count": { "type": "number" }
+    }
+  },
+  "errorTypes": ["DataRecordsExportError"],
+  "permissions": ["data:write"],
+  "routing": {
+    "handlerModule": "dataRecordsExport.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "POST", "path": "/v1/commands/data/records/export" },
+    "cli": { "group": "data", "command": "records-export" },
+    "operationId": "dataRecordsExport"
+  }
+}
