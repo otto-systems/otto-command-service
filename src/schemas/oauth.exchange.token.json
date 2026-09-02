@@ -1,0 +1,57 @@
+{
+  "id": "oauth.exchange.token",
+  "name": "OAuth Token Exchange",
+  "description": "Exchange authorization code for access token (Microsoft, Google)",
+  "category": "auth",
+  "tags": ["oauth", "token", "microsoft", "google"],
+  "handler": "oauthExchangeToken",
+  "input": {
+    "type": "object",
+    "properties": {
+      "providerId": {
+        "type": "string",
+        "description": "OAuth provider (microsoft or google)",
+        "enum": ["microsoft", "google"]
+      },
+      "clientId": {
+        "type": "string",
+        "description": "OAuth application client ID"
+      },
+      "clientSecret": {
+        "type": "string",
+        "description": "OAuth application client secret (NOT logged)"
+      },
+      "authorizationCode": {
+        "type": "string",
+        "description": "Authorization code from OAuth redirect"
+      },
+      "redirectUri": {
+        "type": "string",
+        "description": "Redirect URI used in OAuth flow"
+      }
+    },
+    "required": ["providerId", "clientId", "clientSecret", "authorizationCode", "redirectUri"]
+  },
+  "output": {
+    "type": "object",
+    "properties": {
+      "providerId": { "type": "string" },
+      "token": {
+        "type": "object",
+        "properties": {
+          "value": { "type": "string", "description": "Access token (NOT logged)" },
+          "expiresAt": { "type": "string" },
+          "issuedAt": { "type": "string" }
+        }
+      },
+      "user": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "email": { "type": "string" },
+          "name": { "type": "string" }
+        }
+      }
+    }
+  }
+}
