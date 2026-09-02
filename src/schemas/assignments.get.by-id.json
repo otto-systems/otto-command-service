@@ -1,0 +1,24 @@
+{
+  "name": "assignments.get.by-id",
+  "description": "Get a normalized assignment by stable ID.",
+  "parameters": {
+    "type": "object",
+    "required": ["id"],
+    "additionalProperties": false,
+    "properties": {
+      "id": { "type": "string" },
+      "assignments": { "type": "array", "items": { "type": "object", "additionalProperties": true } }
+    }
+  },
+  "returnType": { "type": "object", "additionalProperties": true },
+  "errorTypes": ["AssignmentsGetByIdError"],
+  "permissions": ["assignments:read"],
+  "routing": {
+    "handlerModule": "assignmentsGetById.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "POST", "path": "/v1/commands/assignments/get-by-id" },
+    "cli": { "group": "assignments", "command": "get-by-id" },
+    "operationId": "assignmentsGetById"
+  }
+}

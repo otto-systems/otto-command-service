@@ -1,0 +1,23 @@
+{
+  "name": "gateway.import.facts",
+  "description": "Import FACTS payload content through gateway client abstraction.",
+  "parameters": {
+    "type": "object",
+    "required": ["csvContent"],
+    "additionalProperties": false,
+    "properties": {
+      "csvContent": { "type": "string" }
+    }
+  },
+  "returnType": { "type": "object", "additionalProperties": true },
+  "errorTypes": ["GatewayImportFactsError"],
+  "permissions": ["gateway:read"],
+  "routing": {
+    "handlerModule": "gatewayImportFacts.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "POST", "path": "/v1/commands/gateway/import-facts" },
+    "cli": { "group": "gateway", "command": "import-facts" },
+    "operationId": "gatewayImportFacts"
+  }
+}

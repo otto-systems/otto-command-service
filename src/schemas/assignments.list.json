@@ -1,0 +1,24 @@
+{
+  "name": "assignments.list",
+  "description": "List normalized assignments with optional limit.",
+  "parameters": {
+    "type": "object",
+    "required": [],
+    "additionalProperties": false,
+    "properties": {
+      "assignments": { "type": "array", "items": { "type": "object", "additionalProperties": true } },
+      "limit": { "type": "number" }
+    }
+  },
+  "returnType": { "type": "object", "additionalProperties": true },
+  "errorTypes": ["AssignmentsListError"],
+  "permissions": ["assignments:read"],
+  "routing": {
+    "handlerModule": "assignmentsList.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "POST", "path": "/v1/commands/assignments/list" },
+    "cli": { "group": "assignments", "command": "list" },
+    "operationId": "assignmentsList"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "name": "gateway.pisignage.push",
+  "description": "Push playlist URL to PiSignage through gateway client abstraction.",
+  "parameters": {
+    "type": "object",
+    "required": ["playerId", "playlistUrl"],
+    "additionalProperties": false,
+    "properties": {
+      "playerId": { "type": "string" },
+      "playlistUrl": { "type": "string" }
+    }
+  },
+  "returnType": { "type": "object", "additionalProperties": true },
+  "errorTypes": ["GatewayPiSignagePushError"],
+  "permissions": ["gateway:write"],
+  "routing": {
+    "handlerModule": "gatewayPiSignagePush.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "POST", "path": "/v1/commands/gateway/pisignage-push" },
+    "cli": { "group": "gateway", "command": "pisignage-push" },
+    "operationId": "gatewayPiSignagePush"
+  }
+}

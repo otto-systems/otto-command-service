@@ -1,0 +1,24 @@
+{
+  "name": "assignments.refresh",
+  "description": "Refresh and normalize assignments from records or CSV content.",
+  "parameters": {
+    "type": "object",
+    "required": [],
+    "additionalProperties": false,
+    "properties": {
+      "csv": { "type": "string" },
+      "records": { "type": "array", "items": { "type": "object", "additionalProperties": true } }
+    }
+  },
+  "returnType": { "type": "object", "additionalProperties": true },
+  "errorTypes": ["AssignmentsRefreshError"],
+  "permissions": ["assignments:write"],
+  "routing": {
+    "handlerModule": "assignmentsRefresh.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "POST", "path": "/v1/commands/assignments/refresh" },
+    "cli": { "group": "assignments", "command": "refresh" },
+    "operationId": "assignmentsRefresh"
+  }
+}
