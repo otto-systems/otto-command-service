@@ -1,0 +1,29 @@
+{
+  "name": "update.validate.install",
+  "description": "Validate install integrity and dependency/version health before update checks.",
+  "parameters": {
+    "type": "object",
+    "required": [],
+    "additionalProperties": false,
+    "properties": {
+      "strict": {
+        "type": "boolean",
+        "description": "When true (default), throws on validation failures."
+      }
+    }
+  },
+  "returnType": {
+    "type": "object",
+    "additionalProperties": true
+  },
+  "errorTypes": ["UpdateValidationError"],
+  "permissions": ["update:read"],
+  "routing": {
+    "handlerModule": "updateValidateInstall.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "POST", "path": "/v1/commands/update/validate-install" },
+    "cli": { "group": "update", "command": "validate-install" },
+    "operationId": "updateValidateInstall"
+  }
+}
