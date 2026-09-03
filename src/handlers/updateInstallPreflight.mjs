@@ -3,7 +3,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { executeEdsCommand } from "../../../otto-kernel/src/eds/eds-runtime.mjs";
-import { validateAutoUpdateScript } from "./updateRepairAutoUpdateScript.mjs";
+import { getGlobalSelfHealingRegistry } from "../../../otto-update/src/selfHealing/registry.js";
 
 const WORKSPACE_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../../../..");
 
@@ -82,24 +82,38 @@ export async function runUpdateInstallPreflightWithOptions(options = {}) {
     }
   }
 
-  // Check auto-update.sh staleness on deployed systems
-  // (when workspaceRoot points to deployed /opt/otto-display-system/current)
-  const autoUpdatePath = path.join(workspaceRoot, "..", "auto-update.sh");
+  // Check auto-update.sh staleness using self-healing framework
+  // The framework is initialized in display-runtime and provides automatic validation
   try {
-    const autoUpdateContent = await readFileImpl(autoUpdatePath);
-    const validation = validateAutoUpdateScript(autoUpdateContent);
-    if (!validation.isHealthy) {
-      issues.push(
-        toIssue(
-          "stale_auto_update_script",
-          "warning",
-          `Auto-update script is missing required functions: ${validation.missingFunctions.join(", ")}. Run 'update.repair.auto-update-script' to regenerate.`,
-          { missingFunctions: validation.missingFunctions, autoUpdatePath }
-        )
-      );
+    const registry = getGlobalSelfHealingRegistry();
+    const autoUpdateArtifact = registry.getArtifact("display-auto-update-script");
+    
+    if (autoUpdateArtifact) {
+      // Framework has registered the artifact - use it to validate
+      const healthCheck = await registry.performHealthCheck();
+      
+      // Check for issues in the health check results
+      const artifactResult = healthCheck.issues.find(i => i.artifactId === autoUpdateArtifact.id);
+      if (artifactResult && !artifactResult.isHealthy) {
+        issues.push(
+          toIssue(
+            "stale_auto_update_script",
+            artifactResult.severity === "error" ? "error" : "warning",
+            `Auto-update script is unhealthy: ${JSON.stringify(artifactResult.details)}. Self-healing framework recommends automatic repair before update.`,
+            { 
+              artifactId: autoUpdateArtifact.id,
+              severity: artifactResult.severity,
+              details: artifactResult.details
+            }
+          )
+        );
+      }
+    } else {
+      // Framework not initialized yet (local dev) - skip check
+      // This happens when running in workspace without deployed auto-update.sh
     }
   } catch (error) {
-    // Auto-update.sh not found (local dev environment) - not a blocking issue
+    // Auto-update.sh not found or framework not initialized - not a blocking issue in dev
   }
 
   let dependencyValidation = null;
