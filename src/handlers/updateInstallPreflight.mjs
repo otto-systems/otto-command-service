@@ -3,7 +3,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { executeEdsCommand } from "../../../otto-kernel/src/eds/eds-runtime.mjs";
-import { getGlobalSelfHealingRegistry } from "../../../otto-update/src/selfHealing/registry.js";
+import { getGlobalSelfHealingRegistry } from "../../../otto-update/dist/selfHealing/index.js";
 
 const WORKSPACE_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../../../..");
 
