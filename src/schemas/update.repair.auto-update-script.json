@@ -1,22 +1,32 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
-  "title": "update.repair.auto-update-script",
+  "name": "update.repair.auto-update-script",
   "description": "Repairs the deployed auto-update.sh script by regenerating from the canonical template.",
-  "type": "object",
-  "properties": {
-    "ok": {
-      "type": "boolean",
-      "description": "Whether the repair was successful"
-    },
-    "message": {
-      "type": "string",
-      "description": "Result message"
-    },
-    "reason": {
-      "type": "string",
-      "enum": ["template-not-found", "canonical-template-invalid", "repair-failed"],
-      "description": "If ok=false, the reason for failure"
-    }
+  "parameters": {
+    "type": "object",
+    "required": [],
+    "additionalProperties": false,
+    "properties": {}
   },
-  "required": ["ok", "message"]
+  "returnType": {
+    "type": "object",
+    "properties": {
+      "ok": { "type": "boolean" },
+      "message": { "type": "string" },
+      "reason": { "type": "string" }
+    },
+    "required": ["ok", "message"]
+  },
+  "errorTypes": ["RepairError"],
+  "permissions": ["update:write"],
+  "routing": {
+    "handlerModule": "updateRepairAutoUpdateScript.mjs",
+    "handlerExport": "updateRepairAutoUpdateScript",
+    "exposedAs": ["cli", "api"],
+    "http": {
+      "method": "POST",
+      "path": "/v1/commands/update/repair/auto-update-script"
+    },
+    "operationId": "updateRepairAutoUpdateScript"
+  }
 }
+
