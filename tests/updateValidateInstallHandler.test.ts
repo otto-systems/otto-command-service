@@ -1,15 +1,11 @@
 import { describe, expect, it, vi } from "vitest";
 
-vi.mock("../src/handlers/updateInstallPreflight.mjs", () => ({
-  runUpdateInstallPreflight: vi.fn()
-}));
-
 import { handle } from "../src/handlers/updateValidateInstall.mjs";
-import { runUpdateInstallPreflight } from "../src/handlers/updateInstallPreflight.mjs";
+import * as preflightModule from "../src/handlers/updateInstallPreflight.mjs";
 
 describe("updateValidateInstall.handle", () => {
   it("returns preflight payload when strict=false", async () => {
-    vi.mocked(runUpdateInstallPreflight).mockResolvedValueOnce({
+    vi.spyOn(preflightModule, "runUpdateInstallPreflight").mockResolvedValueOnce({
       ok: false,
       issues: [{ code: "version_conflict", message: "stale module" }]
     } as any);
@@ -20,7 +16,7 @@ describe("updateValidateInstall.handle", () => {
   });
 
   it("throws when strict mode is enabled and preflight fails", async () => {
-    vi.mocked(runUpdateInstallPreflight).mockResolvedValueOnce({
+    vi.spyOn(preflightModule, "runUpdateInstallPreflight").mockResolvedValueOnce({
       ok: false,
       issues: [{ code: "missing_required_path", message: "missing runtime file" }]
     } as any);
@@ -29,7 +25,7 @@ describe("updateValidateInstall.handle", () => {
   });
 
   it("returns preflight payload when validation passes", async () => {
-    vi.mocked(runUpdateInstallPreflight).mockResolvedValueOnce({
+    vi.spyOn(preflightModule, "runUpdateInstallPreflight").mockResolvedValueOnce({
       ok: true,
       issues: []
     } as any);

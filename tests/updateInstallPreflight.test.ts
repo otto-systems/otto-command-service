@@ -7,6 +7,7 @@ describe("runUpdateInstallPreflightWithOptions", () => {
     const result = await runUpdateInstallPreflightWithOptions({
       workspaceRoot: "C:/mock/workspace",
       pathExists: async () => true,
+      getRegistry: async () => ({ dependencyValidation: null }),
       scanDependencies: async () => ({
         registry: {
           dependencyValidation: {
@@ -34,6 +35,7 @@ describe("runUpdateInstallPreflightWithOptions", () => {
         const normalized = targetPath.replaceAll("\\", "/");
         return !normalized.endsWith("apps/display-runtime/src/server.mjs");
       },
+      getRegistry: async () => ({ dependencyValidation: null }),
       scanDependencies: async () => ({
         registry: {
           dependencyValidation: {
@@ -58,6 +60,7 @@ describe("runUpdateInstallPreflightWithOptions", () => {
     const result = await runUpdateInstallPreflightWithOptions({
       workspaceRoot: "C:/mock/workspace",
       pathExists: async () => true,
+      getRegistry: async () => ({ dependencyValidation: null }),
       scanDependencies: async () => ({
         registry: {
           dependencyValidation: {
@@ -91,6 +94,7 @@ describe("runUpdateInstallPreflightWithOptions", () => {
     const result = await runUpdateInstallPreflightWithOptions({
       workspaceRoot: "C:/mock/workspace",
       pathExists: async () => true,
+      getRegistry: async () => ({ dependencyValidation: null }),
       scanDependencies: async () => {
         throw new Error("EDS unavailable");
       }
@@ -104,6 +108,7 @@ describe("runUpdateInstallPreflightWithOptions", () => {
     const result = await runUpdateInstallPreflightWithOptions({
       workspaceRoot: "C:/mock/workspace",
       pathExists: async () => true,
+      getRegistry: async () => ({ dependencyValidation: null }),
       scanDependencies: async () => ({
         registry: {
           dependencyValidation: {
@@ -148,6 +153,7 @@ describe("runUpdateInstallPreflightWithOptions", () => {
     const result = await runUpdateInstallPreflightWithOptions({
       workspaceRoot: "C:/mock/workspace",
       pathExists: async () => true,
+      getRegistry: async () => ({ dependencyValidation: null }),
       scanDependencies: async () => ({
         registry: {
           dependencyValidation: {

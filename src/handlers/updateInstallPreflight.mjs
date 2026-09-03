@@ -56,6 +56,9 @@ export async function runUpdateInstallPreflightWithOptions(options = {}) {
     ? path.resolve(options.workspaceRoot)
     : WORKSPACE_ROOT;
   const pathExistsImpl = typeof options.pathExists === "function" ? options.pathExists : pathExists;
+  const getRegistryImpl = typeof options.getRegistry === "function"
+    ? options.getRegistry
+    : async (root) => executeEdsCommand("eds.get.registry", { workspaceRoot: root });
   const scanDependenciesImpl = typeof options.scanDependencies === "function"
     ? options.scanDependencies
     : async (root) => executeEdsCommand("eds.scan", { workspaceRoot: root });
@@ -76,19 +79,31 @@ export async function runUpdateInstallPreflightWithOptions(options = {}) {
   }
 
   let dependencyValidation = null;
+  let registryFetched = false;
   try {
-    const scan = await scanDependenciesImpl(workspaceRoot);
-    dependencyValidation = scan?.registry?.dependencyValidation ?? null;
+    const registry = await getRegistryImpl(workspaceRoot);
+    dependencyValidation = registry?.dependencyValidation ?? null;
+    registryFetched = Boolean(dependencyValidation);
   } catch (error) {
-    const message = error instanceof Error ? error.message : String(error);
-    issues.push(
-      toIssue(
-        "eds_scan_failed",
-        "error",
-        `Failed to run EDS dependency scan: ${message}`,
-        { message }
-      )
-    );
+    registryFetched = false;
+  }
+
+  if (!dependencyValidation) {
+    try {
+      const scan = await scanDependenciesImpl(workspaceRoot);
+      dependencyValidation = scan?.registry?.dependencyValidation ?? null;
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      const severity = registryFetched ? "warning" : "error";
+      issues.push(
+        toIssue(
+          "eds_scan_failed",
+          severity,
+          `Failed to run EDS dependency scan: ${message}`,
+          { message }
+        )
+      );
+    }
   }
 
   const dependencyBreakdown = {
