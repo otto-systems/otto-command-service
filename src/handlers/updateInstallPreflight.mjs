@@ -3,6 +3,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 import { executeEdsCommand } from "../../../otto-kernel/src/eds/eds-runtime.mjs";
+import { validateAutoUpdateScript } from "./updateRepairAutoUpdateScript.mjs";
 
 const WORKSPACE_ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../../../../..");
 
@@ -56,6 +57,9 @@ export async function runUpdateInstallPreflightWithOptions(options = {}) {
     ? path.resolve(options.workspaceRoot)
     : WORKSPACE_ROOT;
   const pathExistsImpl = typeof options.pathExists === "function" ? options.pathExists : pathExists;
+  const readFileImpl = typeof options.readFile === "function" 
+    ? options.readFile 
+    : (filePath) => fs.readFile(filePath, "utf8");
   const getRegistryImpl = typeof options.getRegistry === "function"
     ? options.getRegistry
     : async (root) => executeEdsCommand("eds.get.registry", { workspaceRoot: root });
@@ -76,6 +80,26 @@ export async function runUpdateInstallPreflightWithOptions(options = {}) {
         )
       );
     }
+  }
+
+  // Check auto-update.sh staleness on deployed systems
+  // (when workspaceRoot points to deployed /opt/otto-display-system/current)
+  const autoUpdatePath = path.join(workspaceRoot, "..", "auto-update.sh");
+  try {
+    const autoUpdateContent = await readFileImpl(autoUpdatePath);
+    const validation = validateAutoUpdateScript(autoUpdateContent);
+    if (!validation.isHealthy) {
+      issues.push(
+        toIssue(
+          "stale_auto_update_script",
+          "warning",
+          `Auto-update script is missing required functions: ${validation.missingFunctions.join(", ")}. Run 'update.repair.auto-update-script' to regenerate.`,
+          { missingFunctions: validation.missingFunctions, autoUpdatePath }
+        )
+      );
+    }
+  } catch (error) {
+    // Auto-update.sh not found (local dev environment) - not a blocking issue
   }
 
   let dependencyValidation = null;

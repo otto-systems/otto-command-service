@@ -177,4 +177,42 @@ describe("runUpdateInstallPreflightWithOptions", () => {
     expect(result.issues[0]?.severity).toBe("warning");
     expect(result.issues[0]?.message).toContain("otto.auth.extension:service.status");
   });
+
+  it("detects stale auto-update.sh script as warning", async () => {
+    const staleAutoUpdateScript = `
+      #!/usr/bin/env bash
+      echo "old script without required functions"
+    `;
+
+    const result = await runUpdateInstallPreflightWithOptions({
+      workspaceRoot: "C:/opt/otto-display-system/current",
+      pathExists: async (path: string) => true,
+      readFile: async (path: string) => {
+        // Simulate reading the stale auto-update.sh from parent directory
+        if (path.includes("auto-update.sh")) {
+          return staleAutoUpdateScript;
+        }
+        throw new Error("Not found");
+      },
+      getRegistry: async () => ({ dependencyValidation: null }),
+      scanDependencies: async () => ({
+        registry: {
+          dependencyValidation: {
+            missingRequiredExtensions: [],
+            missingContractDependencies: [],
+            missingApiDependencies: [],
+            missingToolDependencies: [],
+            versionConflicts: [],
+            compatibilityConflicts: [],
+            cycles: []
+          }
+        }
+      })
+    });
+
+    expect(result.ok).toBe(true);
+    expect(result.issues.some((issue) => issue.code === "stale_auto_update_script")).toBe(true);
+    const staleIssue = result.issues.find((issue) => issue.code === "stale_auto_update_script");
+    expect(staleIssue?.severity).toBe("warning");
+  });
 });
