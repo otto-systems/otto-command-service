@@ -37,4 +37,12 @@ describe("updateCheck.handle", () => {
       preflight
     });
   });
+
+  it("surfaces otto-update backend failures after preflight passes", async () => {
+    vi.mocked(runUpdateInstallPreflight).mockResolvedValueOnce({ ok: true, issues: [] } as any);
+    vi.mocked(callOttoUpdate).mockRejectedValueOnce(new Error("fetch failed"));
+
+    await expect(handle()).rejects.toThrow("fetch failed");
+    expect(callOttoUpdate).toHaveBeenCalledWith("POST", "/v1/check", undefined, [200, 202]);
+  });
 });

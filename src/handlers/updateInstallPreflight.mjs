@@ -31,6 +31,24 @@ function toIssue(code, severity, message, detail = {}) {
   };
 }
 
+function isWorkspaceConstraint(constraint) {
+  return typeof constraint === "string" && constraint.startsWith("workspace:");
+}
+
+function formatDependencyName(value) {
+  if (typeof value === "string") {
+    return value;
+  }
+
+  if (value && typeof value === "object") {
+    const extension = value.extension ? String(value.extension) : "unknown-extension";
+    const dependency = value.apiDependency ? String(value.apiDependency) : JSON.stringify(value);
+    return `${extension}:${dependency}`;
+  }
+
+  return String(value);
+}
+
 export async function runUpdateInstallPreflightWithOptions(options = {}) {
   const issues = [];
   const missingRequiredPaths = [];
@@ -109,8 +127,8 @@ export async function runUpdateInstallPreflightWithOptions(options = {}) {
     issues.push(
       toIssue(
         "missing_api_dependency",
-        "error",
-        `Required API dependency is missing: ${apiDependency}`,
+        "warning",
+        `Required API dependency is missing: ${formatDependencyName(apiDependency)}`,
         { apiDependency }
       )
     );
@@ -128,6 +146,10 @@ export async function runUpdateInstallPreflightWithOptions(options = {}) {
   }
 
   for (const conflict of dependencyBreakdown.versionConflicts) {
+    if (isWorkspaceConstraint(conflict.constraint)) {
+      continue;
+    }
+
     issues.push(
       toIssue(
         "version_conflict",
@@ -139,6 +161,10 @@ export async function runUpdateInstallPreflightWithOptions(options = {}) {
   }
 
   for (const conflict of dependencyBreakdown.compatibilityConflicts) {
+    if (isWorkspaceConstraint(conflict.constraint)) {
+      continue;
+    }
+
     issues.push(
       toIssue(
         "compatibility_conflict",
@@ -160,13 +186,17 @@ export async function runUpdateInstallPreflightWithOptions(options = {}) {
     );
   }
 
-  const ok = issues.length === 0;
+  const blockingIssueCount = issues.filter((issue) => issue.severity === "error").length;
+  const warningIssueCount = issues.filter((issue) => issue.severity === "warning").length;
+  const ok = blockingIssueCount === 0;
   return {
     ok,
     workspaceRoot,
     checkedAt: new Date().toISOString(),
     summary: {
       issueCount: issues.length,
+      blockingIssueCount,
+      warningIssueCount,
       missingPathCount: missingRequiredPaths.length,
       missingRequiredExtensionCount: dependencyBreakdown.missingRequiredExtensions.length,
       missingContractDependencyCount: dependencyBreakdown.missingContractDependencies.length,

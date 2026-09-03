@@ -25,9 +25,9 @@ describe("command service schemas", () => {
     expect(current.role).toBe("time");
     expect(current.content.object.type).toBe("TimeObject");
 
-    const calendar = await executeCommand("calendar.refresh", {});
-    expect(Array.isArray(calendar.events)).toBe(true);
-    expect(typeof calendar.generatedAt).toBe("string");
+    const providers = await executeCommand("calendar.get.provider.config", {});
+    expect(Array.isArray(providers)).toBe(true);
+    expect(providers.some((provider) => provider.providerId === "microsoft")).toBe(true);
 
     const rotation = await executeCommand("orchestrator.rotation.plan.get", { displayId: "hallway" });
     expect(rotation.displayId).toBe("hallway");
