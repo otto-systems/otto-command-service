@@ -19,4 +19,39 @@ describe("command service schemas", () => {
       bearer_token: null
     });
   });
+
+  it("executes routed display, calendar, and rotation commands", async () => {
+    const current = await executeCommand("display.current", { role: "time" });
+    expect(current.role).toBe("time");
+    expect(current.content.object.type).toBe("TimeObject");
+
+    const calendar = await executeCommand("calendar.refresh", {});
+    expect(Array.isArray(calendar.events)).toBe(true);
+    expect(typeof calendar.generatedAt).toBe("string");
+
+    const rotation = await executeCommand("orchestrator.rotation.plan.get", { displayId: "hallway" });
+    expect(rotation.displayId).toBe("hallway");
+    expect(Array.isArray(rotation.pages)).toBe(true);
+    expect(typeof rotation.generatedAt).toBe("string");
+  });
+
+  it("returns default provider config when no state manager is available", async () => {
+    const result = await executeCommand("calendar.get.provider.config", {});
+
+    expect(Array.isArray(result)).toBe(true);
+    expect(result.some((provider) => provider.providerId === "microsoft")).toBe(true);
+    expect(result.some((provider) => provider.providerId === "google")).toBe(true);
+  });
+
+  it("bootstraps a default provider session when auth tokens are requested", async () => {
+    const result = await executeCommand("auth.get.token", { providerId: "google" });
+
+    expect(result).not.toBeNull();
+    expect(result.providerId).toBe("google");
+    expect(typeof result.value).toBe("string");
+
+    const user = await executeCommand("auth.get.user", { providerId: "google" });
+    expect(user).not.toBeNull();
+    expect(user.providerId).toBe("google");
+  });
 });
