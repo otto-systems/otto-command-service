@@ -1,0 +1,26 @@
+[
+  {
+    "id": "hallway",
+    "name": "Hallway",
+    "type": "custom",
+    "builtIn": true,
+    "displayId": "hallway",
+    "deleted": false
+  },
+  {
+    "id": "weather",
+    "name": "Weather",
+    "type": "weather",
+    "builtIn": true,
+    "displayId": "hallway",
+    "deleted": false
+  },
+  {
+    "id": "time",
+    "name": "Time",
+    "type": "time",
+    "builtIn": true,
+    "displayId": "hallway",
+    "deleted": false
+  }
+]

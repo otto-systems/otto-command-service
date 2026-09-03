@@ -1,0 +1,30 @@
+{
+  "name": "calendar.get.provider.tokens",
+  "description": "Get stored OAuth tokens for calendar providers.",
+  "parameters": {
+    "type": "object",
+    "required": [],
+    "additionalProperties": false,
+    "properties": {}
+  },
+  "returnType": {
+    "type": "object",
+    "additionalProperties": {
+      "type": "object",
+      "properties": {
+        "accessToken": { "type": ["string", "null"] },
+        "expiresAt": { "type": ["string", "null"] },
+        "refreshToken": { "type": ["string", "null"] }
+      }
+    }
+  },
+  "errorTypes": ["CalendarTokenError"],
+  "permissions": ["calendar:read"],
+  "routing": {
+    "handlerModule": "calendarGetProviderTokens.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli"],
+    "cli": { "group": "calendar", "command": "get-tokens" },
+    "operationId": "calendarGetProviderTokens"
+  }
+}

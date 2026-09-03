@@ -1,0 +1,97 @@
+{
+  "pages": {
+    "hallway": {
+      "id": "hallway",
+      "name": "Hallway",
+      "type": "custom",
+      "enabled": true,
+      "tier": 1,
+      "displayId": "hallway",
+      "deleted": false,
+      "displayDurationMs": 30000,
+      "triggers": {
+        "timeBased": true,
+        "scheduleBased": false,
+        "weatherBased": false,
+        "phaseBased": false,
+        "scheduleEvent": "classChange",
+        "weatherCondition": "any",
+        "phase": "assembly"
+      },
+      "customSettings": {
+        "inlineCode": "",
+        "url": "",
+        "assetFolder": ""
+      }
+    },
+    "weather": {
+      "id": "weather",
+      "name": "Weather",
+      "type": "weather",
+      "enabled": true,
+      "tier": 1,
+      "displayId": "hallway",
+      "deleted": false,
+      "displayDurationMs": 30000,
+      "triggers": {
+        "timeBased": true,
+        "scheduleBased": false,
+        "weatherBased": true,
+        "phaseBased": false,
+        "scheduleEvent": "classChange",
+        "weatherCondition": "any",
+        "phase": "assembly"
+      },
+      "weatherSettings": {
+        "units": "F",
+        "iconPack": "default",
+        "severeWeatherOverride": true
+      }
+    },
+    "time": {
+      "id": "time",
+      "name": "Time",
+      "type": "time",
+      "enabled": true,
+      "tier": 1,
+      "displayId": "hallway",
+      "deleted": false,
+      "displayDurationMs": 30000,
+      "triggers": {
+        "timeBased": true,
+        "scheduleBased": false,
+        "weatherBased": false,
+        "phaseBased": false,
+        "scheduleEvent": "classChange",
+        "weatherCondition": "any",
+        "phase": "assembly"
+      },
+      "timeSettings": {
+        "timeZone": "UTC",
+        "useDaylightSavings": true,
+        "format": "24h",
+        "style": "digital",
+        "showSeconds": true,
+        "leadingZero": true
+      }
+    }
+  },
+  "tierList": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "tierNames": {
+    "0": "Emergency",
+    "1": "Tier 1",
+    "2": "Tier 2",
+    "3": "Tier 3"
+  },
+  "playlistOrder": "priority",
+  "manualPageOrder": [
+    "hallway",
+    "weather",
+    "time"
+  ]
+}

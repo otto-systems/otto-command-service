@@ -1,0 +1,39 @@
+{
+  "name": "calendar.set.provider.tokens",
+  "description": "Store OAuth tokens for calendar providers.",
+  "parameters": {
+    "type": "object",
+    "required": ["tokens"],
+    "additionalProperties": false,
+    "properties": {
+      "tokens": {
+        "type": "object",
+        "description": "Map of provider tokens",
+        "additionalProperties": {
+          "type": "object",
+          "properties": {
+            "accessToken": { "type": ["string", "null"] },
+            "expiresAt": { "type": ["string", "null"] },
+            "refreshToken": { "type": ["string", "null"] }
+          }
+        }
+      }
+    }
+  },
+  "returnType": {
+    "type": "object",
+    "properties": {
+      "success": { "type": "boolean" },
+      "message": { "type": "string" }
+    }
+  },
+  "errorTypes": ["CalendarTokenError"],
+  "permissions": ["calendar:write"],
+  "routing": {
+    "handlerModule": "calendarSetProviderTokens.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli"],
+    "cli": { "group": "calendar", "command": "set-tokens" },
+    "operationId": "calendarSetProviderTokens"
+  }
+}
