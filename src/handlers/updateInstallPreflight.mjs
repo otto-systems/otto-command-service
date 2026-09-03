@@ -82,38 +82,45 @@ export async function runUpdateInstallPreflightWithOptions(options = {}) {
     }
   }
 
-  // Check auto-update.sh staleness using self-healing framework
-  // The framework is initialized in display-runtime and provides automatic validation
+  // Check auto-update.sh staleness directly (framework may not be initialized in command-runner process)
   try {
-    const registry = getGlobalSelfHealingRegistry();
-    const autoUpdateArtifact = registry.getArtifact("display-auto-update-script");
+    const autoUpdateScriptPath = path.join(workspaceRoot, '../../auto-update.sh');
+    const autoUpdateContent = await readFileImpl(autoUpdateScriptPath);
     
-    if (autoUpdateArtifact) {
-      // Framework has registered the artifact - use it to validate
-      const healthCheck = await registry.performHealthCheck();
-      
-      // Check for issues in the health check results
-      const artifactResult = healthCheck.issues.find(i => i.artifactId === autoUpdateArtifact.id);
-      if (artifactResult && !artifactResult.isHealthy) {
-        issues.push(
-          toIssue(
-            "stale_auto_update_script",
-            artifactResult.severity === "error" ? "error" : "warning",
-            `Auto-update script is unhealthy: ${JSON.stringify(artifactResult.details)}. Self-healing framework recommends automatic repair before update.`,
-            { 
-              artifactId: autoUpdateArtifact.id,
-              severity: artifactResult.severity,
-              details: artifactResult.details
-            }
-          )
-        );
+    // Check for required functions in the script
+    const REQUIRED_FUNCTIONS = [
+      'legacy_update_fallback',
+      'read_manifest_version',
+      'run_command'
+    ];
+    
+    const missingFunctions = [];
+    for (const funcName of REQUIRED_FUNCTIONS) {
+      const patterns = [
+        new RegExp(`\\b${funcName}\\s*\\(\\s*\\)\\s*\\{`),
+        new RegExp(`\\bfunction\\s+${funcName}\\s*\\{`)
+      ];
+      const found = patterns.some((pattern) => pattern.test(autoUpdateContent));
+      if (!found) {
+        missingFunctions.push(funcName);
       }
-    } else {
-      // Framework not initialized yet (local dev) - skip check
-      // This happens when running in workspace without deployed auto-update.sh
+    }
+    
+    if (missingFunctions.length > 0) {
+      issues.push(
+        toIssue(
+          "stale_auto_update_script",
+          "warning",
+          `Auto-update script is missing functions: ${missingFunctions.join(', ')}. Self-healing framework can repair this automatically.`,
+          { 
+            missingFunctions,
+            path: autoUpdateScriptPath
+          }
+        )
+      );
     }
   } catch (error) {
-    // Auto-update.sh not found or framework not initialized - not a blocking issue in dev
+    // Auto-update.sh not found - OK for development, only problematic if deployed
   }
 
   let dependencyValidation = null;

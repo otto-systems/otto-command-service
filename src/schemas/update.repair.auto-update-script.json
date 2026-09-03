@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "update.repair.auto-update-script",
+  "description": "Repairs the deployed auto-update.sh script by regenerating from the canonical template.",
+  "type": "object",
+  "properties": {
+    "ok": {
+      "type": "boolean",
+      "description": "Whether the repair was successful"
+    },
+    "message": {
+      "type": "string",
+      "description": "Result message"
+    },
+    "reason": {
+      "type": "string",
+      "enum": ["template-not-found", "canonical-template-invalid", "repair-failed"],
+      "description": "If ok=false, the reason for failure"
+    }
+  },
+  "required": ["ok", "message"]
+}
