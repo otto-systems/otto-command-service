@@ -1,0 +1,46 @@
+{
+  "name": "edge.tls.plan",
+  "description": "Generate deterministic TLS provisioning plan and SAN-safe OpenSSL config.",
+  "parameters": {
+    "type": "object",
+    "required": [],
+    "additionalProperties": false,
+    "properties": {
+      "certDir": { "type": "string" },
+      "certBaseName": { "type": "string" },
+      "dnsNames": {
+        "type": "array",
+        "items": { "type": "string" }
+      },
+      "ipAddresses": {
+        "type": "array",
+        "items": { "type": "string" }
+      }
+    }
+  },
+  "returnType": {
+    "type": "object",
+    "required": ["keyPath", "certPath", "caPath", "opensslConfig"],
+    "additionalProperties": true,
+    "properties": {
+      "keyPath": { "type": "string" },
+      "certPath": { "type": "string" },
+      "caPath": { "type": "string" },
+      "opensslConfig": { "type": "string" },
+      "warnings": {
+        "type": "array",
+        "items": { "type": "string" }
+      }
+    }
+  },
+  "errorTypes": ["EdgeTlsPlanError"],
+  "permissions": ["edge:write"],
+  "routing": {
+    "handlerModule": "edgeTlsPlan.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "POST", "path": "/v1/commands/edge/tls/plan" },
+    "cli": { "group": "edge", "command": "tls plan" },
+    "operationId": "edgeTlsPlan"
+  }
+}

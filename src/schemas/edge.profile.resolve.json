@@ -1,0 +1,42 @@
+{
+  "name": "edge.profile.resolve",
+  "description": "Resolve canonical hostname, endpoint URLs, and OAuth redirect URI profile.",
+  "parameters": {
+    "type": "object",
+    "required": [],
+    "additionalProperties": false,
+    "properties": {
+      "host": { "type": "string" },
+      "frontendHost": { "type": "string" },
+      "port": { "type": "number" },
+      "path": { "type": "string" },
+      "oauthPath": { "type": "string" },
+      "forceHttps": { "type": "boolean" }
+    }
+  },
+  "returnType": {
+    "type": "object",
+    "required": ["host", "origin", "displayUrl", "oauthRedirectUri"],
+    "additionalProperties": true,
+    "properties": {
+      "host": { "type": "string" },
+      "origin": { "type": "string" },
+      "displayUrl": { "type": "string" },
+      "oauthRedirectUri": { "type": "string" },
+      "warnings": {
+        "type": "array",
+        "items": { "type": "string" }
+      }
+    }
+  },
+  "errorTypes": ["EdgeProfileResolveError"],
+  "permissions": ["edge:read"],
+  "routing": {
+    "handlerModule": "edgeProfileResolve.mjs",
+    "handlerExport": "handle",
+    "exposedAs": ["cli", "api"],
+    "http": { "method": "POST", "path": "/v1/commands/edge/profile/resolve" },
+    "cli": { "group": "edge", "command": "profile resolve" },
+    "operationId": "edgeProfileResolve"
+  }
+}
