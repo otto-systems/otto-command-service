@@ -1,0 +1,75 @@
+{
+  "$schema": "./schemas/maestro-commands.schema.json",
+  "schemaVersion": "1.0.0",
+  "sourceOfTruth": {
+    "repo": "../otto-command-service",
+    "schemaPath": "src/schemas"
+  },
+  "commands": [
+    {
+      "id": "otto.maestro.install",
+      "command": "otto maestro install",
+      "description": "Install Maestro using the Otto payload specification.",
+      "commandServiceSchema": "maestro.install",
+      "payload": {
+        "required": [
+          "payloadPath"
+        ],
+        "properties": {
+          "payloadPath": {
+            "type": "string"
+          },
+          "channel": {
+            "type": "string",
+            "default": "stable"
+          }
+        }
+      }
+    },
+    {
+      "id": "otto.maestro.update",
+      "command": "otto maestro update",
+      "description": "Update Maestro and apply post-update lifecycle hooks.",
+      "commandServiceSchema": "maestro.update",
+      "payload": {
+        "required": [],
+        "properties": {
+          "channel": {
+            "type": "string",
+            "default": "stable"
+          }
+        }
+      }
+    },
+    {
+      "id": "otto.maestro.repair",
+      "command": "otto maestro repair",
+      "description": "Repair a damaged Maestro installation by replaying payload install steps.",
+      "commandServiceSchema": "maestro.repair",
+      "payload": {
+        "required": [],
+        "properties": {
+          "verifyOnly": {
+            "type": "boolean",
+            "default": false
+          }
+        }
+      }
+    },
+    {
+      "id": "otto.maestro.uninstall",
+      "command": "otto maestro uninstall",
+      "description": "Uninstall Maestro runtime and remove runtime assets.",
+      "commandServiceSchema": "maestro.uninstall",
+      "payload": {
+        "required": [],
+        "properties": {
+          "purgeData": {
+            "type": "boolean",
+            "default": false
+          }
+        }
+      }
+    }
+  ]
+}
